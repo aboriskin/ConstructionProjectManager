@@ -8,9 +8,19 @@ namespace DomainModels.Models.Constraints
 {
     public class Constraint
     {
-        public ConstraintActivityPointType PointType { get; set; }
-        public ConstraintType ConstraintType { get; set; }
-        public DateTime ConstraintDate { get; set; }
+        public Constraint(
+            ConstraintActivityPointType pointType,
+            ConstraintType constraintType,
+            DateTime constraintDate)
+        {
+            PointType = pointType;
+            ConstraintType = constraintType;
+            ConstraintDate = constraintDate;
+        }
+
+        public ConstraintActivityPointType PointType { get; private set; }
+        public ConstraintType ConstraintType { get; private set; }
+        public DateTime ConstraintDate { get; private set; }
 
         public bool Validate(Activity activity)
         {
