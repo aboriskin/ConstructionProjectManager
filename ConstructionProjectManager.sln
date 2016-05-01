@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{503E5356-60A8-4985-9D44-3CA079625206}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModel.Tests", "UnitTests\DomainModel.Tests\DomainModel.Tests.csproj", "{3864331C-5251-4C2C-86B2-17CDAC89E23C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModels.Tests", "UnitTests\DomainModels.Tests\DomainModels.Tests.csproj", "{3864331C-5251-4C2C-86B2-17CDAC89E23C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,7 @@ using DomainModels.Models;
 using DomainModels.Models.Constraints;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DomainModel.Tests
+namespace DomainModels.Tests.Models
 {
     [TestClass]
     public class ActivityTests

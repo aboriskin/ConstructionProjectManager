@@ -6,7 +6,7 @@
     <ProjectGuid>{3864331C-5251-4C2C-86B2-17CDAC89E23C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DomainModel.Tests</RootNamespace>
+    <RootNamespace>DomainModels.Tests</RootNamespace>
     <AssemblyName>DomainModel.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
