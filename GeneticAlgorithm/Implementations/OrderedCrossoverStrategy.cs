@@ -18,7 +18,7 @@ namespace GeneticAlgorithm.Implementations
 
         public double Probability { get; private set; }
 
-        public Tuple<Chromosome<TGene>, Chromosome<TGene>> Do(Chromosome<TGene> left, Chromosome<TGene> right)
+        public Tuple<Chromosome<TGene>, Chromosome<TGene>> Cross(Chromosome<TGene> left, Chromosome<TGene> right)
         {
             var delimiterIndex = RandomHelper.GetInt(1, left.Genes.Count - 1);
 

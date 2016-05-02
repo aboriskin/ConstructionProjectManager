@@ -25,5 +25,11 @@ namespace GeneticAlgorithm.Core
             Chromosomes.Add(newPair.Item1);
             Chromosomes.Add(newPair.Item2);
         }
+
+        public void ReplaceChromosome(Chromosome<TGene> current, Chromosome<TGene> newChromosome)
+        {
+            Chromosomes.Remove(current);
+            Chromosomes.Add(newChromosome);
+        }
     }
 }

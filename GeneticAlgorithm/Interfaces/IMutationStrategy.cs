@@ -8,7 +8,7 @@ using GeneticAlgorithm.Core;
 namespace GeneticAlgorithm.Interfaces
 {
     public interface IMutationStrategy<TGene>
-    {
-        Chromosome<TGene> Do(Chromosome<TGene> chromosome, out bool mutated);
+    {        
+        Chromosome<TGene> Mutate(Chromosome<TGene> chromosome, out bool mutated);
     }
 }

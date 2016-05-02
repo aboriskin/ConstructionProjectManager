@@ -32,26 +32,34 @@ namespace GeneticAlgorithm.Managers
 
             foreach (var pair in pairs)
             {
-                bool item1Valid = false, item2Valid = false;
-                int iteration = 0;
-
-                Tuple<Chromosome<TGene>, Chromosome<TGene>> newPair = null;
-
-                while (iteration < MaxCrossoverIterationsCount
-                    && !item1Valid && !item2Valid)
-                {
-                    newPair = _crossoverStrategy.Do(pair.Item1, pair.Item2);
-                    newPair.Item1.FitnessFunctionValue = _fitnessFunction.Calculate(newPair.Item1, out item1Valid);
-                    newPair.Item2.FitnessFunctionValue = _fitnessFunction.Calculate(newPair.Item2, out item2Valid);
-
-                    iteration++;
-                }
-
-                if (item1Valid && item2Valid)
-                {
-                    population.ReplacePair(pair, newPair);
-                }                
+                CrossPair(population, pair);
             }            
+        }
+
+        private void CrossPair(
+            Population<TGene> population, 
+            Tuple<Chromosome<TGene>, 
+                Chromosome<TGene>> pair)
+        {
+            bool item1Valid = false, item2Valid = false;
+            int iteration = 0;
+
+            Tuple<Chromosome<TGene>, Chromosome<TGene>> newPair = null;
+
+            while (iteration < MaxCrossoverIterationsCount
+                   && !item1Valid && !item2Valid)
+            {
+                newPair = _crossoverStrategy.Cross(pair.Item1, pair.Item2);
+                newPair.Item1.FitnessFunctionValue = _fitnessFunction.Calculate(newPair.Item1, out item1Valid);
+                newPair.Item2.FitnessFunctionValue = _fitnessFunction.Calculate(newPair.Item2, out item2Valid);
+
+                iteration++;
+            }
+
+            if (item1Valid && item2Valid)
+            {
+                population.ReplacePair(pair, newPair);
+            }
         }
 
         private List<Tuple<Chromosome<TGene>, Chromosome<TGene>>> GeneratePairs(Population<TGene> population)

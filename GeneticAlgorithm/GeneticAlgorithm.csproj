@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\BestResultDescription.cs" />
     <Compile Include="Core\Chromosome.cs" />
     <Compile Include="Core\GeneticAlgorithm.cs" />
     <Compile Include="Core\Population.cs" />
     <Compile Include="Exceptions\GeneticAlgorithmException.cs" />
+    <Compile Include="Implementations\MutationStrategy.cs" />
     <Compile Include="Implementations\OrderedCrossoverStrategy.cs" />
     <Compile Include="Implementations\RouletteWheelSelection.cs" />
     <Compile Include="Interfaces\IInitialChromosomeGenerator.cs" />
@@ -52,8 +54,10 @@
     <Compile Include="Interfaces\IMutationStrategy.cs" />
     <Compile Include="Interfaces\ISelectionStrategy.cs" />
     <Compile Include="Interfaces\ITerminationFunction.cs" />
+    <Compile Include="Managers\BestChromosomesKeeper.cs" />
     <Compile Include="Managers\CrossoverManager.cs" />
     <Compile Include="Managers\InitialPopulationGenerator.cs" />
+    <Compile Include="Managers\MutationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

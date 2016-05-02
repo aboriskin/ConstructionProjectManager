@@ -11,6 +11,6 @@ namespace GeneticAlgorithm.Interfaces
     {
         double Probability { get; }
 
-        Tuple<Chromosome<TGene>, Chromosome<TGene>> Do(Chromosome<TGene> left, Chromosome<TGene> right);
+        Tuple<Chromosome<TGene>, Chromosome<TGene>> Cross(Chromosome<TGene> left, Chromosome<TGene> right);
     }
 }

@@ -9,8 +9,8 @@ namespace GeneticAlgorithm.Interfaces
 {
     public interface ITerminationFunction<TGene>
     {
-        bool ShouldTeminate(
+        bool ShouldTerminate(
             Population<TGene> currentPopulation,
-            List<Population<TGene>> previousPopulations);
+            List<Population<TGene>> allPopulations);
     }
 }

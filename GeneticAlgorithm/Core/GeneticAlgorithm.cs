@@ -11,49 +11,51 @@ namespace GeneticAlgorithm.Core
     public class GeneticAlgorithm<TGene>
     {
         public GeneticAlgorithm(
-            int populationSize,
-            double crossoverProbability,
-            double mutationProbability,
+            int populationSize,            
             IInitialChromosomeGenerator<TGene> chromosomeGenerator,
             IFitnessFunction<TGene> fitnessFunction,
             ISelectionStrategy<TGene> selectionStrategy,
-            ICrossoverStrategy<TGene> crossoverStrategy )
+            ICrossoverStrategy<TGene> crossoverStrategy,
+            IMutationStrategy<TGene> mutationStrategy)
         {
-            _populationSize = populationSize;
-            _crossoverProbability = crossoverProbability;
-            _mutationProbability = mutationProbability;
-            _fitnessFunction = fitnessFunction;
+            _populationSize = populationSize;                        
             _selectionStrategy = selectionStrategy;
 
             _initialPopulationGenerator = new InitialPopulationGenerator<TGene>(chromosomeGenerator, fitnessFunction);
             _crossoverManager = new CrossoverManager<TGene>(crossoverStrategy, fitnessFunction);
+            _mutationManager = new MutationManager<TGene>(mutationStrategy, fitnessFunction);
         }
 
-        private readonly int _populationSize;
-        private readonly double _crossoverProbability;
-        private readonly double _mutationProbability;
-        private readonly IFitnessFunction<TGene> _fitnessFunction;
+        private readonly int _populationSize;                
         private readonly ISelectionStrategy<TGene> _selectionStrategy; 
         private readonly InitialPopulationGenerator<TGene> _initialPopulationGenerator;
-        private readonly CrossoverManager<TGene> _crossoverManager; 
+        private readonly CrossoverManager<TGene> _crossoverManager;
+        private readonly MutationManager<TGene> _mutationManager; 
 
         private List<Population<TGene>> Populations { get; set; } = new List<Population<TGene>>(); 
 
-        public void Run(ITerminationFunction<TGene> terminationFunction)
+        public BestChromosomesKeeper<TGene> Run(
+            int bestResultsCount,
+            ITerminationFunction<TGene> terminationFunction)
         {
+            var bestChromosomesKeeper = new BestChromosomesKeeper<TGene>(bestResultsCount);
+
             var currentPopulation = _initialPopulationGenerator.GeneratePopulation(_populationSize);
+            Populations.Add(currentPopulation);
+            bestChromosomesKeeper.Process(currentPopulation);
 
-            while (!terminationFunction.ShouldTeminate(currentPopulation, Populations))
-            {
-                Populations.Add(currentPopulation);
-
+            while (!terminationFunction.ShouldTerminate(currentPopulation, Populations))
+            {                
                 var nextPopulation = _selectionStrategy.NextPopulation(currentPopulation);
                 _crossoverManager.Perform(nextPopulation);
-
-
+                _mutationManager.Perform(nextPopulation);
                 currentPopulation = nextPopulation;
+
+                Populations.Add(currentPopulation);
+                bestChromosomesKeeper.Process(currentPopulation);
             }
 
+            return bestChromosomesKeeper;
         }
     }
 }
