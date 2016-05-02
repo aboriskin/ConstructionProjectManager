@@ -26,48 +26,29 @@ namespace TestApp
             }
 
             var generator = new InitialChromosomeGenerator(data.Activities);
+            var fitnessFunction = new FitnessFunction(data.Resources, data.Activities);
 
             using (var writer = new StreamWriter("chromosome.txt"))
             {
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 100; i++)
                 {
-                    var chromosome = generator.Generate();
+                    var chromosome = generator.Generate();                    
+
+                    if (chromosome == null)
+                    {
+                        continue;
+                    }
+
                     writer.WriteLine(JsonConvert.SerializeObject(chromosome));
-                    writer.WriteLine(Validation(data, chromosome));
+
+                    bool isValid;
+                    var result = fitnessFunction.Calculate(chromosome, out isValid);
+
+                    writer.WriteLine("{0} - {1}", isValid, result);
                 }
                 writer.Close();
             }
 
-        }
-
-        static bool Validation(ProblemData data, Chromosome<int> chromosome)
-        {
-            if (chromosome == null)
-            {
-                return true;
-            }
-
-            var map = data.Activities.ToDictionary(a => a.Id);
-
-            for (int i = 0; i < chromosome.Genes.Count; i++)
-            {
-                var geneId = chromosome.Genes[i];
-
-                if (map[geneId].PreActivityIds.IsNullOrEmpty())
-                {
-                    continue;
-                }
-
-                foreach (var preActivityId in map[geneId].PreActivityIds)
-                {
-                    if (chromosome.Genes.IndexOf(preActivityId) > i)
-                    {
-                        throw new Exception("Error");
-                    }
-                }
-            }
-
-            return true;
-        }
+        }        
     }
 }

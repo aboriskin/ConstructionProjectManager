@@ -40,7 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ConstructionProjectManagerException.cs" />
+    <Compile Include="GeneticAlgorithm\FitnessFunction.cs" />
     <Compile Include="GeneticAlgorithm\InitialChromosomeGenerator.cs" />
+    <Compile Include="Helpers\DateRange.cs" />
+    <Compile Include="Helpers\ResourceConsumptionTimeline.cs" />
+    <Compile Include="Managers\SchedulerManager.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Constraints\TimeConstraint.cs" />
     <Compile Include="Models\Constraints\TimeConstraintActivityPointType.cs" />

@@ -11,6 +11,9 @@ using Utils.Extensions;
 
 namespace DomainModels.GeneticAlgorithm
 {
+    /// <summary>
+    /// Generates the initial chromosome that describes the priority of the resource allocation
+    /// </summary>
     public class InitialChromosomeGenerator : IInitialChromosoneGenerator<int>
     {
         public InitialChromosomeGenerator(List<Activity> activities)

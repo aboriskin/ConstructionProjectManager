@@ -21,6 +21,12 @@ namespace DomainModels.Models
         public DateTime? StartDate { get; set; }
         public DateTime? FinishDate => StartDate?.AddDays(Duration);
 
+        public void ClearCalculatedValues()
+        {
+            ActivityDayIndex = 0;
+            StartDate = null;
+        }
+
         #endregion
 
         public bool Validate()
@@ -33,5 +39,27 @@ namespace DomainModels.Models
             return TimeConstraints.All(c => c.Validate(this));
         }
 
+
+        private Dictionary<int, decimal> _consumption = null;
+        public Dictionary<int, decimal> GetResourceConsumption(List<Resource> resources)
+        {
+            if (_consumption == null)
+            {
+                _consumption = new Dictionary<int, decimal>();
+                foreach (var resource in resources)
+                {
+                    var rcpd = ResourceConsumptionsPerDay.FirstOrDefault(r => r.ResourceId == resource.Id);
+                    if (rcpd == null)
+                    {
+                        _consumption.Add(resource.Id, 0);                        
+                    }
+                    else
+                    {
+                        _consumption.Add(resource.Id, rcpd.Amount);
+                    }
+                }
+            }
+            return _consumption;
+        } 
     }
 }

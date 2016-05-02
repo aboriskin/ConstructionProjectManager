@@ -28,7 +28,7 @@ namespace DomainModels.Tests.Models
                 StartDate = _fixedDatePoint,
                 TimeConstraints = new List<TimeConstraint>
                 {
-                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(-1))
+                    new TimeConstraint(TimeConstraintType.Earliest, _fixedDatePoint.AddDays(-1))
                 }
             };
             var result = activity.Validate();
@@ -44,7 +44,7 @@ namespace DomainModels.Tests.Models
                 StartDate = _fixedDatePoint,
                 TimeConstraints = new List<TimeConstraint>
                 {
-                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Earliest, _fixedDatePoint)
+                    new TimeConstraint(TimeConstraintType.Earliest, _fixedDatePoint)
                 }
             };
             var result = activity.Validate();
@@ -60,7 +60,7 @@ namespace DomainModels.Tests.Models
                 StartDate = _fixedDatePoint,
                 TimeConstraints = new List<TimeConstraint>
                 {
-                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(1))
+                    new TimeConstraint(TimeConstraintType.Earliest, _fixedDatePoint.AddDays(1))
                 }
             };
             var result = activity.Validate();
@@ -76,7 +76,7 @@ namespace DomainModels.Tests.Models
                 StartDate = _fixedDatePoint,
                 TimeConstraints = new List<TimeConstraint>
                 {
-                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Latest, _fixedDatePoint.AddDays(1))
+                    new TimeConstraint(TimeConstraintType.Latest, _fixedDatePoint.AddDays(1))
                 }
             };
             var result = activity.Validate();
@@ -92,7 +92,7 @@ namespace DomainModels.Tests.Models
                 StartDate = _fixedDatePoint,
                 TimeConstraints = new List<TimeConstraint>
                 {
-                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Latest, _fixedDatePoint)
+                    new TimeConstraint(TimeConstraintType.Latest, _fixedDatePoint)
                 }
             };
             var result = activity.Validate();
@@ -108,115 +108,12 @@ namespace DomainModels.Tests.Models
                 StartDate = _fixedDatePoint,
                 TimeConstraints = new List<TimeConstraint>
                 {
-                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Latest, _fixedDatePoint.AddDays(-1))
+                    new TimeConstraint(TimeConstraintType.Latest, _fixedDatePoint.AddDays(-1))
                 }
             };
             var result = activity.Validate();
 
             Assert.AreEqual(false, result);
-        }
-
-        [TestMethod]
-        public void Test_008_Finish_Earliest_Valid()
-        {
-            var activity = new Activity
-            {
-                StartDate = _fixedDatePoint,
-                Duration = 2,
-                TimeConstraints = new List<TimeConstraint>
-                {
-                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(1))
-                }
-            };
-            var result = activity.Validate();
-
-            Assert.AreEqual(true, result);
-        }
-
-        [TestMethod]
-        public void Test_009_Finish_Earliest_Valid()
-        {
-            var activity = new Activity
-            {
-                StartDate = _fixedDatePoint,
-                Duration = 2,
-                TimeConstraints = new List<TimeConstraint>
-                {
-                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(2))
-                }
-            };
-            var result = activity.Validate();
-
-            Assert.AreEqual(true, result);
-        }
-
-        [TestMethod]
-        public void Test_010_Finish_Earliest_Invalid()
-        {
-            var activity = new Activity
-            {
-                StartDate = _fixedDatePoint,
-                Duration = 2,
-                TimeConstraints = new List<TimeConstraint>
-                {
-                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(3))
-                }
-            };
-            var result = activity.Validate();
-
-            Assert.AreEqual(false, result);
-        }
-
-
-        [TestMethod]
-        public void Test_011_Finish_Latest_Valid()
-        {
-            var activity = new Activity
-            {
-                StartDate = _fixedDatePoint,
-                Duration = 2,
-                TimeConstraints = new List<TimeConstraint>
-                {
-                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Latest, _fixedDatePoint.AddDays(3))
-                }
-            };
-            var result = activity.Validate();
-
-            Assert.AreEqual(true, result);
-        }
-
-        [TestMethod]
-        public void Test_012_Finish_Latest_Valid()
-        {
-            var activity = new Activity
-            {
-                StartDate = _fixedDatePoint,
-                Duration = 2,
-                TimeConstraints = new List<TimeConstraint>
-                {
-                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Latest, _fixedDatePoint.AddDays(2))
-                }
-            };
-            var result = activity.Validate();
-
-            Assert.AreEqual(true, result);
-        }
-
-        [TestMethod]
-        public void Test_013_Finish_Latest_Invalid()
-        {
-            var activity = new Activity
-            {
-                StartDate = _fixedDatePoint,
-                Duration = 2,
-                TimeConstraints = new List<TimeConstraint>
-                {
-                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Latest, _fixedDatePoint.AddDays(1))
-                }
-            };
-            var result = activity.Validate();
-
-            Assert.AreEqual(false, result);
-        }
+        }      
     }
 }

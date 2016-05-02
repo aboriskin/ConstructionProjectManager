@@ -8,6 +8,6 @@ namespace GeneticAlgorithm.Core
 {
     public class Chromosome<TGene>        
     {
-        public List<TGene> Genes { get; private set; } = new List<TGene>();
+        public List<TGene> Genes { get; set; } = new List<TGene>(); //[TODO] private set
     }
 }

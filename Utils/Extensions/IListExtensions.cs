@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +23,15 @@ namespace Utils.Extensions
                 return false;
             }
             return list.Contains(item);
+        }
+
+        public static IList<T> SafeWhere<T>(this IList<T> list, Func<T, bool> exp)
+        {
+            if (list == null)
+            {
+                return new List<T>();
+            }
+            return list.Where(exp).ToList();
         }
 
         public static IList<T> Shuffle<T>(this IList<T> list)
