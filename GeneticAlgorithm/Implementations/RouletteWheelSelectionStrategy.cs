@@ -9,7 +9,7 @@ using Utils;
 
 namespace GeneticAlgorithm.Implementations
 {
-    public class RouletteWheelSelection<TGene> : ISelectionStrategy<TGene>
+    public class RouletteWheelSelectionStrategy<TGene> : ISelectionStrategy<TGene>
     {        
         public Population<TGene> NextPopulation(Population<TGene> currentPopulation)
         {

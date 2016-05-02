@@ -36,15 +36,19 @@ namespace GeneticAlgorithm.Managers
             while (currentIteration < maxIterations &&
                 result.Chromosomes.Count < populationSize)
             {
+                currentIteration++;
                 var chromosome = _chromosomeGenerator.Generate();
+                if (chromosome == null)
+                {
+                    continue;
+                }
+
                 chromosome.FitnessFunctionValue = _fitnessFunction.Calculate(chromosome, out isValid);
 
                 if (isValid)
                 {
                     result.Chromosomes.Add(chromosome);                    
-                }
-
-                currentIteration++;
+                }                
             }
 
             if (currentIteration == maxIterations)

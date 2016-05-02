@@ -11,5 +11,10 @@ namespace GeneticAlgorithm.Core
         public List<TGene> Genes { get; private set; } = new List<TGene>();
 
         public double FitnessFunctionValue { get; set; }
+
+        public override string ToString()
+        {
+            return String.Format("Chromosome:[{0}], Fitness Value:{1}", String.Join(", ", Genes), FitnessFunctionValue);
+        }
     }
 }

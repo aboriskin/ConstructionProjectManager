@@ -47,7 +47,9 @@
     <Compile Include="Exceptions\GeneticAlgorithmException.cs" />
     <Compile Include="Implementations\MutationStrategy.cs" />
     <Compile Include="Implementations\OrderedCrossoverStrategy.cs" />
-    <Compile Include="Implementations\RouletteWheelSelection.cs" />
+    <Compile Include="Implementations\RouletteWheelSelectionStrategy.cs" />
+    <Compile Include="Implementations\TerminationFunction.cs" />
+    <Compile Include="Interfaces\IChromosomeValidator.cs" />
     <Compile Include="Interfaces\IInitialChromosomeGenerator.cs" />
     <Compile Include="Interfaces\ICrossoverStrategy.cs" />
     <Compile Include="Interfaces\IFitnessFunction.cs" />

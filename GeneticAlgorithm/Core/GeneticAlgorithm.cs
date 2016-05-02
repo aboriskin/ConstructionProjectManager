@@ -16,14 +16,15 @@ namespace GeneticAlgorithm.Core
             IFitnessFunction<TGene> fitnessFunction,
             ISelectionStrategy<TGene> selectionStrategy,
             ICrossoverStrategy<TGene> crossoverStrategy,
-            IMutationStrategy<TGene> mutationStrategy)
+            IMutationStrategy<TGene> mutationStrategy,
+            IChromosomeValidator<TGene> chromosomeValidator)
         {
             _populationSize = populationSize;                        
             _selectionStrategy = selectionStrategy;
 
             _initialPopulationGenerator = new InitialPopulationGenerator<TGene>(chromosomeGenerator, fitnessFunction);
             _crossoverManager = new CrossoverManager<TGene>(crossoverStrategy, fitnessFunction);
-            _mutationManager = new MutationManager<TGene>(mutationStrategy, fitnessFunction);
+            _mutationManager = new MutationManager<TGene>(mutationStrategy, fitnessFunction, chromosomeValidator);
         }
 
         private readonly int _populationSize;                

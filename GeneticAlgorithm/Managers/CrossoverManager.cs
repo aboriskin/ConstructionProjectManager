@@ -8,6 +8,7 @@ using GeneticAlgorithm.Core;
 using GeneticAlgorithm.Interfaces;
 using Utils;
 using Utils.Extensions;
+using Utils.Logging;
 
 namespace GeneticAlgorithm.Managers
 {
@@ -59,6 +60,10 @@ namespace GeneticAlgorithm.Managers
             if (item1Valid && item2Valid)
             {
                 population.ReplacePair(pair, newPair);
+            }
+            else
+            {
+                Logger.Log(String.Format("Crossover has been failed {0} times for the following items: 1 - {1}, 2 - {2}", MaxCrossoverIterationsCount, pair.Item1, pair.Item2));
             }
         }
 

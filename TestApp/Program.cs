@@ -9,6 +9,7 @@ using DomainModels.GeneticAlgorithm;
 using DomainModels.Models;
 using DomainModels.Models.Constraints;
 using GeneticAlgorithm.Core;
+using GeneticAlgorithm.Implementations;
 using Newtonsoft.Json;
 using Utils.Extensions;
 
@@ -25,30 +26,33 @@ namespace TestApp
                 data = JsonConvert.DeserializeObject<ProblemData>(str);
             }
 
-            var generator = new InitialChromosomeGenerator(data.Activities);
+            var chromosomeGenerator = new InitialChromosomeGenerator(data.Activities);
             var fitnessFunction = new FitnessFunction(data.Resources, data.Activities);
+            var selectionStrategy = new RouletteWheelSelectionStrategy<int>();
+            var crossoverStrategy = new OrderedCrossoverStrategy<int>(probability: 0.65);
+            var mutationStrategy = new MutationStrategy<int>(probability: 0.01);
+            var chromosomeValidator = new ChromosomeValidator(data.Activities);
+            var terminationFunction = new TerminationFunction<int>(generationLimit: 300, rangeSizeToCheckFitnessValue: 30);
 
-            using (var writer = new StreamWriter("chromosome.txt"))
+            var geneticAlgorithm = new GeneticAlgorithm<int>(
+                15,
+                chromosomeGenerator,
+                fitnessFunction,
+                selectionStrategy,
+                crossoverStrategy,
+                mutationStrategy,
+                chromosomeValidator);
+
+            var resultKeeper = geneticAlgorithm.Run(20, terminationFunction);
+
+            using (var writer = new StreamWriter("result.txt"))
             {
-                for (int i = 0; i < 100; i++)
+                foreach (var bestResultDescription in resultKeeper.GetBestResults())
                 {
-                    var chromosome = generator.Generate();                    
-
-                    if (chromosome == null)
-                    {
-                        continue;
-                    }
-
-                    writer.WriteLine(JsonConvert.SerializeObject(chromosome));
-
-                    bool isValid;
-                    var result = fitnessFunction.Calculate(chromosome, out isValid);
-
-                    writer.WriteLine("{0} - {1}", isValid, result);
+                    writer.WriteLine("Generation: {0}. {1}", bestResultDescription.Generation, bestResultDescription.Chromosome);
                 }
                 writer.Close();
             }
-
-        }        
+        }
     }
 }

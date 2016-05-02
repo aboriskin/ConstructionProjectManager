@@ -40,7 +40,7 @@ namespace GeneticAlgorithm.Implementations
         {
             var result = new Chromosome<TGene>();
 
-            for (int i = 0; i < mutatedIndex - 1; i++)
+            for (int i = 0; i < mutatedIndex; i++)
             {
                 result.Genes.Add(chromosome.Genes[i]);
             }

@@ -28,8 +28,19 @@ namespace GeneticAlgorithm.Core
 
         public void ReplaceChromosome(Chromosome<TGene> current, Chromosome<TGene> newChromosome)
         {
-            Chromosomes.Remove(current);
-            Chromosomes.Add(newChromosome);
+            var index = Chromosomes.IndexOf(current);
+            Chromosomes[index] = newChromosome;            
+        }
+
+        private double? _averageFitnessValue;
+
+        public double GetAverageFitnessValue()
+        {
+            if (_averageFitnessValue == null)
+            {
+                _averageFitnessValue = Chromosomes.Average(c => c.FitnessFunctionValue);
+            }
+            return _averageFitnessValue.Value;
         }
     }
 }

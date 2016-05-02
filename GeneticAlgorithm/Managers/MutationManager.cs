@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GeneticAlgorithm.Core;
 using GeneticAlgorithm.Interfaces;
+using Utils.Logging;
 
 namespace GeneticAlgorithm.Managers
 {
@@ -14,40 +15,46 @@ namespace GeneticAlgorithm.Managers
 
         public MutationManager(
             IMutationStrategy<TGene> mutationStrategy,
-            IFitnessFunction<TGene> fitnessFunction)
+            IFitnessFunction<TGene> fitnessFunction,
+            IChromosomeValidator<TGene> chromosomeValidator)
         {
             _mutationStrategy = mutationStrategy;
             _fitnessFunction = fitnessFunction;
+            _chromosomeValidator = chromosomeValidator;
         }
 
         private readonly IMutationStrategy<TGene> _mutationStrategy;
-        private readonly IFitnessFunction<TGene> _fitnessFunction; 
+        private readonly IFitnessFunction<TGene> _fitnessFunction;
+        private readonly IChromosomeValidator<TGene> _chromosomeValidator; 
 
         public void Perform(Population<TGene> population)
         {
-            foreach (var chromosome in population.Chromosomes)
+            for (int i = 0; i < population.Chromosomes.Count; i++)
             {
-                MutateChromosome(population, chromosome);
+                MutateChromosome(population, population.Chromosomes[i]);
             }
         }
 
         private void MutateChromosome(
-            Population<TGene> population, 
+            Population<TGene> population,
             Chromosome<TGene> chromosome)
         {
-            var isValid = false;
             var iteration = 0;
+            bool mutated = false, isValid = false;
 
             Chromosome<TGene> mutatedChromosome = null;
 
             while (iteration < MaxMutationIterationsCount && !isValid)
             {
-                bool mutated;
                 mutatedChromosome = _mutationStrategy.Mutate(chromosome, out mutated);
 
                 if (mutated)
                 {
-                    mutatedChromosome.FitnessFunctionValue = _fitnessFunction.Calculate(mutatedChromosome, out isValid);
+                    isValid = _chromosomeValidator.IsValid(mutatedChromosome);
+                    if (isValid)
+                    {
+                        mutatedChromosome.FitnessFunctionValue = _fitnessFunction.Calculate(mutatedChromosome, out isValid);
+                    }                    
                 }
                 else
                 {
@@ -60,7 +67,14 @@ namespace GeneticAlgorithm.Managers
 
             if (isValid)
             {
-                population.ReplaceChromosome(chromosome, mutatedChromosome);
+                if (mutated)
+                {
+                    population.ReplaceChromosome(chromosome, mutatedChromosome);
+                }
+            }
+            else
+            {
+                Logger.Log(String.Format("Mutation has been failed {0} times for the following item: {1}", MaxMutationIterationsCount, chromosome));
             }
         }
     }

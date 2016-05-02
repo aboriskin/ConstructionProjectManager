@@ -51,5 +51,15 @@ namespace Utils.Extensions
 
             return result;
         }
+
+        public static IList<T> GetLastN<T>(this IList<T> list, int count)
+        {
+            if (list.Count <= count)
+            {
+                return list;
+            }
+
+            return list.Skip(list.Count - count).ToList();
+        } 
     }
 }
