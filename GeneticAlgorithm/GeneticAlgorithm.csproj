@@ -40,6 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Chromosome.cs" />
+    <Compile Include="Core\GeneticAlgorithm.cs" />
+    <Compile Include="Core\Population.cs" />
+    <Compile Include="Interfaces\ICrossoverStrategy.cs" />
+    <Compile Include="Interfaces\IFitnessFunction.cs" />
+    <Compile Include="Interfaces\IMutationStrategy.cs" />
+    <Compile Include="Interfaces\ITerminationFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -101,7 +101,7 @@ namespace DomainModels.Tests.Models
         }
 
         [TestMethod]
-        public void Test_007_Start_Latest_Valid()
+        public void Test_007_Start_Latest_Invalid()
         {
             var activity = new Activity
             {
