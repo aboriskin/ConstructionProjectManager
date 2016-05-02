@@ -10,9 +10,14 @@ namespace Utils
     {
         private static Random _random = new Random((int)DateTime.UtcNow.Ticks);
 
-        public static int GetRandomNumber(int minValue, int maxValue)
+        public static int GetInt(int minValue, int maxValue)
         {
             return _random.Next(minValue, maxValue + 1);
+        }
+
+        public static double GetDouble(double min, double max)
+        {
+            return min + (max - min) * _random.NextDouble();
         }
     }
 }

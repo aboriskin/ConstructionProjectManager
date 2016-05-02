@@ -14,7 +14,7 @@ namespace DomainModels.GeneticAlgorithm
     /// <summary>
     /// Generates the initial chromosome that describes the priority of the resource allocation
     /// </summary>
-    public class InitialChromosomeGenerator : IInitialChromosoneGenerator<int>
+    public class InitialChromosomeGenerator : IInitialChromosomeGenerator<int>
     {
         public InitialChromosomeGenerator(List<Activity> activities)
         {
@@ -40,7 +40,7 @@ namespace DomainModels.GeneticAlgorithm
                     return null; // This shuffle combination cannot produce the valid chromosome.
                 }
 
-                var index = RandomHelper.GetRandomNumber(minIndex, maxIndex);
+                var index = RandomHelper.GetInt(minIndex, maxIndex);
                 chromosome.Genes.Insert(index, item.Id);
             }
 

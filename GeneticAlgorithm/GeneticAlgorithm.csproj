@@ -43,12 +43,22 @@
     <Compile Include="Core\Chromosome.cs" />
     <Compile Include="Core\GeneticAlgorithm.cs" />
     <Compile Include="Core\Population.cs" />
-    <Compile Include="Interfaces\IInitialChromosoneGenerator.cs" />
+    <Compile Include="Exceptions\GeneticAlgorithmException.cs" />
+    <Compile Include="Implementations\RouletteWheelSelection.cs" />
+    <Compile Include="Interfaces\IInitialChromosomeGenerator.cs" />
     <Compile Include="Interfaces\ICrossoverStrategy.cs" />
     <Compile Include="Interfaces\IFitnessFunction.cs" />
     <Compile Include="Interfaces\IMutationStrategy.cs" />
+    <Compile Include="Interfaces\ISelectionStrategy.cs" />
     <Compile Include="Interfaces\ITerminationFunction.cs" />
+    <Compile Include="Managers\InitialPopulationGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{E1767943-03EC-4501-BC00-3A504EC8E66F}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

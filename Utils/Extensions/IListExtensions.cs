@@ -44,7 +44,7 @@ namespace Utils.Extensions
 
             while (copiedList.Count > 0)
             {
-                var randInd = RandomHelper.GetRandomNumber(0, copiedList.Count - 1);
+                var randInd = RandomHelper.GetInt(0, copiedList.Count - 1);
                 result.Add(copiedList[randInd]);
                 copiedList.RemoveAt(randInd);
             }

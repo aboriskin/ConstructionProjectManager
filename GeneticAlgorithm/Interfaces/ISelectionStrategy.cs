@@ -7,10 +7,8 @@ using GeneticAlgorithm.Core;
 
 namespace GeneticAlgorithm.Interfaces
 {
-    public interface ICrossoverStrategy<TGene>
+    public interface ISelectionStrategy<TGene>
     {
-        double Probability { get; }
-
-        Tuple<Chromosome<TGene>, Chromosome<TGene>> Do(Chromosome<TGene> left, Chromosome<TGene> right);
+        Population<TGene> NextPopulation(Population<TGene> currentPopulation);
     }
 }

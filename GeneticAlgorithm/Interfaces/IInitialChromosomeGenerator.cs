@@ -7,7 +7,7 @@ using GeneticAlgorithm.Core;
 
 namespace GeneticAlgorithm.Interfaces
 {
-    public interface IInitialChromosoneGenerator<TGene>
+    public interface IInitialChromosomeGenerator<TGene>
     {
         Chromosome<TGene> Generate();
     }

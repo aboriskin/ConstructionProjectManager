@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithm.Core
 {
-    class Population<TGene>
+    public class Population<TGene>
     {
         public int Generation { get; private set; } = 1;
         public List<Chromosome<TGene>> Chromosomes { get; private set; } = new List<Chromosome<TGene>>();
+
+        public Population<TGene> GenerateEmptyNext()
+        {
+            return new Population<TGene>() { Generation = this.Generation + 1 };
+        }
     }
 }

@@ -144,7 +144,7 @@ namespace DomainModels.Managers
 
             return new DateRange
             {
-                StartIndex = lastIndexFinish // (lastIndexFinish, +inf) intervall
+                StartIndex = lastIndexFinish // (lastIndexFinish, +inf) interval
             };
         }
 
