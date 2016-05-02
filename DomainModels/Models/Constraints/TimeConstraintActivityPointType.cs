@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DomainModels.Models.Constraints
 {
-    public enum ConstraintType
+    public enum TimeConstraintActivityPointType
     {
-        Earliest,
-        Latest
+        Start,
+        Finish
     }
 }

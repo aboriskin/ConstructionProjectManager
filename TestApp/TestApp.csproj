@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D4BA339-6819-4BAC-9DC9-03845BA5CA74}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{6CD2FD8B-2596-4EA0-BD32-E94F3F0F9042}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DomainModels</RootNamespace>
-    <AssemblyName>DomainModels</AssemblyName>
+    <RootNamespace>TestApp</RootNamespace>
+    <AssemblyName>TestApp</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,18 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeneticAlgorithm\InitialChromosomeGenerator.cs" />
-    <Compile Include="Models\Activity.cs" />
-    <Compile Include="Models\Constraints\TimeConstraint.cs" />
-    <Compile Include="Models\Constraints\TimeConstraintActivityPointType.cs" />
-    <Compile Include="Models\Constraints\TimeConstraintType.cs" />
+    <Compile Include="ProblemData.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Resource.cs" />
-    <Compile Include="Models\ResourceConsumptionPerDay.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DomainModels\DomainModels.csproj">
+      <Project>{0d4ba339-6819-4bac-9dc9-03845ba5ca74}</Project>
+      <Name>DomainModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GeneticAlgorithm\GeneticAlgorithm.csproj">
-      <Project>{8DF7E654-4C92-40C7-BEF5-B5686C49375E}</Project>
+      <Project>{8df7e654-4c92-40c7-bef5-b5686c49375e}</Project>
       <Name>GeneticAlgorithm</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
@@ -59,7 +69,6 @@
       <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

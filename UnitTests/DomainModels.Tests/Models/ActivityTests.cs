@@ -26,9 +26,9 @@ namespace DomainModels.Tests.Models
             var activity = new Activity
             {
                 StartDate = _fixedDatePoint,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Start, ConstraintType.Earliest, _fixedDatePoint.AddDays(-1))
+                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(-1))
                 }
             };
             var result = activity.Validate();
@@ -42,9 +42,9 @@ namespace DomainModels.Tests.Models
             var activity = new Activity
             {
                 StartDate = _fixedDatePoint,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Start, ConstraintType.Earliest, _fixedDatePoint)
+                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Earliest, _fixedDatePoint)
                 }
             };
             var result = activity.Validate();
@@ -58,9 +58,9 @@ namespace DomainModels.Tests.Models
             var activity = new Activity
             {
                 StartDate = _fixedDatePoint,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Start, ConstraintType.Earliest, _fixedDatePoint.AddDays(1))
+                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(1))
                 }
             };
             var result = activity.Validate();
@@ -74,9 +74,9 @@ namespace DomainModels.Tests.Models
             var activity = new Activity
             {
                 StartDate = _fixedDatePoint,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Start, ConstraintType.Latest, _fixedDatePoint.AddDays(1))
+                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Latest, _fixedDatePoint.AddDays(1))
                 }
             };
             var result = activity.Validate();
@@ -90,9 +90,9 @@ namespace DomainModels.Tests.Models
             var activity = new Activity
             {
                 StartDate = _fixedDatePoint,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Start, ConstraintType.Latest, _fixedDatePoint)
+                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Latest, _fixedDatePoint)
                 }
             };
             var result = activity.Validate();
@@ -106,9 +106,9 @@ namespace DomainModels.Tests.Models
             var activity = new Activity
             {
                 StartDate = _fixedDatePoint,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Start, ConstraintType.Latest, _fixedDatePoint.AddDays(-1))
+                    new TimeConstraint(TimeConstraintActivityPointType.Start, TimeConstraintType.Latest, _fixedDatePoint.AddDays(-1))
                 }
             };
             var result = activity.Validate();
@@ -123,9 +123,9 @@ namespace DomainModels.Tests.Models
             {
                 StartDate = _fixedDatePoint,
                 Duration = 2,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Finish, ConstraintType.Earliest, _fixedDatePoint.AddDays(1))
+                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(1))
                 }
             };
             var result = activity.Validate();
@@ -140,9 +140,9 @@ namespace DomainModels.Tests.Models
             {
                 StartDate = _fixedDatePoint,
                 Duration = 2,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Finish, ConstraintType.Earliest, _fixedDatePoint.AddDays(2))
+                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(2))
                 }
             };
             var result = activity.Validate();
@@ -157,9 +157,9 @@ namespace DomainModels.Tests.Models
             {
                 StartDate = _fixedDatePoint,
                 Duration = 2,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Finish, ConstraintType.Earliest, _fixedDatePoint.AddDays(3))
+                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Earliest, _fixedDatePoint.AddDays(3))
                 }
             };
             var result = activity.Validate();
@@ -175,9 +175,9 @@ namespace DomainModels.Tests.Models
             {
                 StartDate = _fixedDatePoint,
                 Duration = 2,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Finish, ConstraintType.Latest, _fixedDatePoint.AddDays(3))
+                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Latest, _fixedDatePoint.AddDays(3))
                 }
             };
             var result = activity.Validate();
@@ -192,9 +192,9 @@ namespace DomainModels.Tests.Models
             {
                 StartDate = _fixedDatePoint,
                 Duration = 2,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Finish, ConstraintType.Latest, _fixedDatePoint.AddDays(2))
+                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Latest, _fixedDatePoint.AddDays(2))
                 }
             };
             var result = activity.Validate();
@@ -209,9 +209,9 @@ namespace DomainModels.Tests.Models
             {
                 StartDate = _fixedDatePoint,
                 Duration = 2,
-                Constraints = new List<Constraint>
+                TimeConstraints = new List<TimeConstraint>
                 {
-                    new Constraint(ConstraintActivityPointType.Finish, ConstraintType.Latest, _fixedDatePoint.AddDays(1))
+                    new TimeConstraint(TimeConstraintActivityPointType.Finish, TimeConstraintType.Latest, _fixedDatePoint.AddDays(1))
                 }
             };
             var result = activity.Validate();

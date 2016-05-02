@@ -1,0 +1,19 @@
+{"Resources":[
+{"Id":1,"Name":"Wood","MaxAvailableAmountPerDay":4},
+{"Id":2,"Name":"Labour","MaxAvailableAmountPerDay":3}
+],
+"Activities":[
+{"Id":1,Name:"Construct the architecture plan","Duration":5, "ResourceConsumptionsPerDay":[{"ResourceId":2,"Amount":1}],"TimeConstraints":[{"PointType":0,"ConstraintType":0,"ConstraintDate":"2016-06-01"}]},
+{"Id":2,Name:"Build a foundation","PreActivityIds":[1],"Duration":10,"ResourceConsumptionsPerDay":[{"ResourceId":1,"Amount":2},{"ResourceId":2,"Amount":2}]},
+{"Id":3,Name:"Build the walls","PreActivityIds":[1,2],"Duration":10,"ResourceConsumptionsPerDay":[{"ResourceId":1,"Amount":3},{"ResourceId":2,"Amount":2}]},
+{"Id":4,Name:"Build the furnace","PreActivityIds":[2],"Duration":5,"ResourceConsumptionsPerDay":[{"ResourceId":1,"Amount":2},{"ResourceId":2,"Amount":1}]},
+{"Id":5,Name:"Build the floor","PreActivityIds":[2],"Duration":2,"ResourceConsumptionsPerDay":[{"ResourceId":1,"Amount":1},{"ResourceId":2,"Amount":1}]},
+{"Id":6,Name:"Build the roof","PreActivityIds":[3],"Duration":7,"ResourceConsumptionsPerDay":[{"ResourceId":1,"Amount":3},{"ResourceId":2,"Amount":3}]},
+{"Id":7,Name:"Build the electicity","PreActivityIds":[6],"Duration":3,"ResourceConsumptionsPerDay":[{"ResourceId":2,"Amount":2}]},
+{"Id":8,Name:"Build the water pipes","PreActivityIds":[3],"Duration":4,"ResourceConsumptionsPerDay":[{"ResourceId":2,"Amount":1}]},
+{"Id":9,Name:"Build the drainage","PreActivityIds":[2],"Duration":5,"ResourceConsumptionsPerDay":[{"ResourceId":1,"Amount":1},{"ResourceId":2,"Amount":1}]},
+{"Id":10,Name:"Build the windows","PreActivityIds":[3],"Duration":4,"ResourceConsumptionsPerDay":[{"ResourceId":1,"Amount":2},{"ResourceId":2,"Amount":2}]},
+{"Id":11,Name:"Build the door","PreActivityIds":[3],"Duration":1,"ResourceConsumptionsPerDay":[{"ResourceId":1,"Amount":2},{"ResourceId":2,"Amount":1}]},
+{"Id":12,Name:"Trim","PreActivityIds":[3,4,5,6,7,8,9,10],"Duration":5,"ResourceConsumptionsPerDay":[{"ResourceId":1,"Amount":4},{"ResourceId":2,"Amount":2}]},
+{"Id":13,Name:"Buy a food for the first use","PreActivityIds":[],"Duration":1,"ResourceConsumptionsPerDay":[{"ResourceId":2,"Amount":2}]}
+]}

@@ -9,14 +9,15 @@ namespace DomainModels.Models
     public class Activity
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public List<int> PreActivityIds { get; set; }
         public int Duration { get; set; }
-        public List<ResourceConsumption> ResourceConsumptions { get; set; }
-        public List<Constraint> Constraints { get; set; }
+        public List<ResourceConsumptionPerDay> ResourceConsumptionsPerDay { get; set; }
+        public List<TimeConstraint> TimeConstraints { get; set; }
 
         #region Calculated properties
 
-        public int ActivityIndex { get; set; }
+        public int ActivityDayIndex { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? FinishDate => StartDate?.AddDays(Duration);
 
@@ -24,12 +25,12 @@ namespace DomainModels.Models
 
         public bool Validate()
         {
-            if (Constraints.IsNullOrEmpty())
+            if (TimeConstraints.IsNullOrEmpty())
             {
                 return true;
             }
 
-            return Constraints.All(c => c.Validate(this));
+            return TimeConstraints.All(c => c.Validate(this));
         }
 
     }

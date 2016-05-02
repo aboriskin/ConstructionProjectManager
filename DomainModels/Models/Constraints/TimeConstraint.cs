@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DomainModels.Models.Constraints
 {
-    public class Constraint
+    public class TimeConstraint
     {
-        public Constraint(
-            ConstraintActivityPointType pointType,
-            ConstraintType constraintType,
+        public TimeConstraint(
+            TimeConstraintActivityPointType pointType,
+            TimeConstraintType constraintType,
             DateTime constraintDate)
         {
             PointType = pointType;
@@ -18,13 +18,13 @@ namespace DomainModels.Models.Constraints
             ConstraintDate = constraintDate;
         }
 
-        public ConstraintActivityPointType PointType { get; private set; }
-        public ConstraintType ConstraintType { get; private set; }
+        public TimeConstraintActivityPointType PointType { get; private set; }
+        public TimeConstraintType ConstraintType { get; private set; }
         public DateTime ConstraintDate { get; private set; }
 
         public bool Validate(Activity activity)
         {
-            if (PointType == ConstraintActivityPointType.Start)
+            if (PointType == TimeConstraintActivityPointType.Start)
             {
                 return ValidatePoint(activity.StartDate);
             }
@@ -39,7 +39,7 @@ namespace DomainModels.Models.Constraints
                 return true;
             }
 
-            if (ConstraintType == ConstraintType.Earliest)
+            if (ConstraintType == TimeConstraintType.Earliest)
             {
                 return ConstraintDate <= date;
             }
