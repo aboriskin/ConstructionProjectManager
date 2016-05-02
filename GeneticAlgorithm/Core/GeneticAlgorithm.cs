@@ -16,7 +16,8 @@ namespace GeneticAlgorithm.Core
             double mutationProbability,
             IInitialChromosomeGenerator<TGene> chromosomeGenerator,
             IFitnessFunction<TGene> fitnessFunction,
-            ISelectionStrategy<TGene> selectionStrategy)
+            ISelectionStrategy<TGene> selectionStrategy,
+            ICrossoverStrategy<TGene> crossoverStrategy )
         {
             _populationSize = populationSize;
             _crossoverProbability = crossoverProbability;
@@ -25,6 +26,7 @@ namespace GeneticAlgorithm.Core
             _selectionStrategy = selectionStrategy;
 
             _initialPopulationGenerator = new InitialPopulationGenerator<TGene>(chromosomeGenerator, fitnessFunction);
+            _crossoverManager = new CrossoverManager<TGene>(crossoverStrategy, fitnessFunction);
         }
 
         private readonly int _populationSize;
@@ -33,16 +35,24 @@ namespace GeneticAlgorithm.Core
         private readonly IFitnessFunction<TGene> _fitnessFunction;
         private readonly ISelectionStrategy<TGene> _selectionStrategy; 
         private readonly InitialPopulationGenerator<TGene> _initialPopulationGenerator;
+        private readonly CrossoverManager<TGene> _crossoverManager; 
 
         private List<Population<TGene>> Populations { get; set; } = new List<Population<TGene>>(); 
 
-        public void Run()
+        public void Run(ITerminationFunction<TGene> terminationFunction)
         {
             var currentPopulation = _initialPopulationGenerator.GeneratePopulation(_populationSize);
 
-            Populations.Add(currentPopulation);
+            while (!terminationFunction.ShouldTeminate(currentPopulation, Populations))
+            {
+                Populations.Add(currentPopulation);
 
-            var nextPopulation = _selectionStrategy.NextPopulation(currentPopulation);
+                var nextPopulation = _selectionStrategy.NextPopulation(currentPopulation);
+                _crossoverManager.Perform(nextPopulation);
+
+
+                currentPopulation = nextPopulation;
+            }
 
         }
     }

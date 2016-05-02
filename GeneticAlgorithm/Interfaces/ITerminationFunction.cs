@@ -7,7 +7,7 @@ using GeneticAlgorithm.Core;
 
 namespace GeneticAlgorithm.Interfaces
 {
-    interface ITerminationFunction<TGene>
+    public interface ITerminationFunction<TGene>
     {
         bool ShouldTeminate(
             Population<TGene> currentPopulation,

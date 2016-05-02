@@ -15,5 +15,15 @@ namespace GeneticAlgorithm.Core
         {
             return new Population<TGene>() { Generation = this.Generation + 1 };
         }
+
+        public void ReplacePair(
+            Tuple<Chromosome<TGene>, Chromosome<TGene>> currentPair,
+            Tuple<Chromosome<TGene>, Chromosome<TGene>> newPair)
+        {
+            Chromosomes.Remove(currentPair.Item1);
+            Chromosomes.Remove(currentPair.Item2);
+            Chromosomes.Add(newPair.Item1);
+            Chromosomes.Add(newPair.Item2);
+        }
     }
 }

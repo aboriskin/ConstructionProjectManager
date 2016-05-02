@@ -19,5 +19,10 @@ namespace Utils
         {
             return min + (max - min) * _random.NextDouble();
         }
+
+        public static bool IsEventHappened(double probability)
+        {
+            return _random.NextDouble() < probability;
+        }
     }
 }

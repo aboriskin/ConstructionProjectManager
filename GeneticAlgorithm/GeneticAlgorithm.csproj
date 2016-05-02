@@ -44,6 +44,7 @@
     <Compile Include="Core\GeneticAlgorithm.cs" />
     <Compile Include="Core\Population.cs" />
     <Compile Include="Exceptions\GeneticAlgorithmException.cs" />
+    <Compile Include="Implementations\OrderedCrossoverStrategy.cs" />
     <Compile Include="Implementations\RouletteWheelSelection.cs" />
     <Compile Include="Interfaces\IInitialChromosomeGenerator.cs" />
     <Compile Include="Interfaces\ICrossoverStrategy.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Interfaces\IMutationStrategy.cs" />
     <Compile Include="Interfaces\ISelectionStrategy.cs" />
     <Compile Include="Interfaces\ITerminationFunction.cs" />
+    <Compile Include="Managers\CrossoverManager.cs" />
     <Compile Include="Managers\InitialPopulationGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
