@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MainApp.ViewModels
 {
-    class ResourceViewModel
+    public class ResourceViewModel
     {
         public int Id { get; set; }
         public string ResourceName { get; set; }

@@ -43,15 +43,24 @@
             this.bottomPanel = new System.Windows.Forms.Panel();
             this.centerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.activityBottomPanel = new System.Windows.Forms.Panel();
+            this.buttonEditActivity = new System.Windows.Forms.Button();
             this.addActivityButton = new System.Windows.Forms.Button();
             this.activitiesDataGridView = new System.Windows.Forms.DataGridView();
             this.resourceBottomPanel = new System.Windows.Forms.Panel();
+            this.buttonDeleteResources = new System.Windows.Forms.Button();
             this.buttonAddResource = new System.Windows.Forms.Button();
             this.resourcesDataGridView = new System.Windows.Forms.DataGridView();
-            this.buttonDeleteResources = new System.Windows.Forms.Button();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResourceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LimitPerDay = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonDeleteActivies = new System.Windows.Forms.Button();
+            this.ActivityId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PreactivitiesColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ActivityName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ActivityDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ActivityResources = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ActivityTimeConstraint = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.saveActivityDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openActivityDialog = new System.Windows.Forms.OpenFileDialog();
             this.topPanel.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.centerSplitContainer)).BeginInit();
@@ -70,7 +79,7 @@
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPanel.Location = new System.Drawing.Point(0, 0);
             this.topPanel.Name = "topPanel";
-            this.topPanel.Size = new System.Drawing.Size(830, 32);
+            this.topPanel.Size = new System.Drawing.Size(919, 32);
             this.topPanel.TabIndex = 0;
             // 
             // mainMenuStrip
@@ -81,7 +90,7 @@
             this.helpToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(830, 28);
+            this.mainMenuStrip.Size = new System.Drawing.Size(919, 28);
             this.mainMenuStrip.TabIndex = 0;
             this.mainMenuStrip.Text = "menuStrip1";
             // 
@@ -100,31 +109,33 @@
             // newProjectToolStripMenuItem
             // 
             this.newProjectToolStripMenuItem.Name = "newProjectToolStripMenuItem";
-            this.newProjectToolStripMenuItem.Size = new System.Drawing.Size(164, 26);
+            this.newProjectToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.newProjectToolStripMenuItem.Text = "New Project";
+            this.newProjectToolStripMenuItem.Click += new System.EventHandler(this.newProjectToolStripMenuItem_Click);
             // 
             // helpMenuItem
             // 
             this.helpMenuItem.Name = "helpMenuItem";
-            this.helpMenuItem.Size = new System.Drawing.Size(164, 26);
+            this.helpMenuItem.Size = new System.Drawing.Size(181, 26);
             this.helpMenuItem.Text = "Load";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(164, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(164, 26);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(164, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // helpToolStripMenuItem
@@ -160,7 +171,7 @@
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottomPanel.Location = new System.Drawing.Point(0, 302);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(830, 100);
+            this.bottomPanel.Size = new System.Drawing.Size(919, 100);
             this.bottomPanel.TabIndex = 1;
             // 
             // centerSplitContainer
@@ -171,26 +182,40 @@
             // 
             // centerSplitContainer.Panel1
             // 
-            this.centerSplitContainer.Panel1.Controls.Add(this.activityBottomPanel);
             this.centerSplitContainer.Panel1.Controls.Add(this.activitiesDataGridView);
+            this.centerSplitContainer.Panel1.Controls.Add(this.activityBottomPanel);
+            this.centerSplitContainer.Panel1MinSize = 500;
             // 
             // centerSplitContainer.Panel2
             // 
-            this.centerSplitContainer.Panel2.Controls.Add(this.resourceBottomPanel);
             this.centerSplitContainer.Panel2.Controls.Add(this.resourcesDataGridView);
-            this.centerSplitContainer.Size = new System.Drawing.Size(830, 270);
-            this.centerSplitContainer.SplitterDistance = 530;
+            this.centerSplitContainer.Panel2.Controls.Add(this.resourceBottomPanel);
+            this.centerSplitContainer.Panel2MinSize = 260;
+            this.centerSplitContainer.Size = new System.Drawing.Size(919, 270);
+            this.centerSplitContainer.SplitterDistance = 611;
             this.centerSplitContainer.TabIndex = 2;
             // 
             // activityBottomPanel
             // 
             this.activityBottomPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.activityBottomPanel.Controls.Add(this.buttonDeleteActivies);
+            this.activityBottomPanel.Controls.Add(this.buttonEditActivity);
             this.activityBottomPanel.Controls.Add(this.addActivityButton);
             this.activityBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.activityBottomPanel.Location = new System.Drawing.Point(0, 220);
             this.activityBottomPanel.Name = "activityBottomPanel";
-            this.activityBottomPanel.Size = new System.Drawing.Size(530, 50);
+            this.activityBottomPanel.Size = new System.Drawing.Size(611, 50);
             this.activityBottomPanel.TabIndex = 1;
+            // 
+            // buttonEditActivity
+            // 
+            this.buttonEditActivity.Location = new System.Drawing.Point(133, 10);
+            this.buttonEditActivity.Name = "buttonEditActivity";
+            this.buttonEditActivity.Size = new System.Drawing.Size(106, 30);
+            this.buttonEditActivity.TabIndex = 1;
+            this.buttonEditActivity.Text = "Edit Selected";
+            this.buttonEditActivity.UseVisualStyleBackColor = true;
+            this.buttonEditActivity.Click += new System.EventHandler(this.buttonEditActivity_Click);
             // 
             // addActivityButton
             // 
@@ -204,13 +229,23 @@
             // 
             // activitiesDataGridView
             // 
+            this.activitiesDataGridView.AllowUserToAddRows = false;
+            this.activitiesDataGridView.AllowUserToDeleteRows = false;
             this.activitiesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.activitiesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ActivityId,
+            this.PreactivitiesColumn,
+            this.ActivityName,
+            this.ActivityDuration,
+            this.ActivityResources,
+            this.ActivityTimeConstraint});
             this.activitiesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.activitiesDataGridView.Location = new System.Drawing.Point(0, 0);
             this.activitiesDataGridView.Name = "activitiesDataGridView";
+            this.activitiesDataGridView.ReadOnly = true;
             this.activitiesDataGridView.RowHeadersVisible = false;
             this.activitiesDataGridView.RowTemplate.Height = 24;
-            this.activitiesDataGridView.Size = new System.Drawing.Size(530, 270);
+            this.activitiesDataGridView.Size = new System.Drawing.Size(611, 220);
             this.activitiesDataGridView.TabIndex = 0;
             // 
             // resourceBottomPanel
@@ -221,12 +256,22 @@
             this.resourceBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.resourceBottomPanel.Location = new System.Drawing.Point(0, 220);
             this.resourceBottomPanel.Name = "resourceBottomPanel";
-            this.resourceBottomPanel.Size = new System.Drawing.Size(296, 50);
+            this.resourceBottomPanel.Size = new System.Drawing.Size(304, 50);
             this.resourceBottomPanel.TabIndex = 2;
+            // 
+            // buttonDeleteResources
+            // 
+            this.buttonDeleteResources.Location = new System.Drawing.Point(131, 10);
+            this.buttonDeleteResources.Name = "buttonDeleteResources";
+            this.buttonDeleteResources.Size = new System.Drawing.Size(123, 30);
+            this.buttonDeleteResources.TabIndex = 2;
+            this.buttonDeleteResources.Text = "Delete selected";
+            this.buttonDeleteResources.UseVisualStyleBackColor = true;
+            this.buttonDeleteResources.Click += new System.EventHandler(this.buttonDeleteResources_Click);
             // 
             // buttonAddResource
             // 
-            this.buttonAddResource.Location = new System.Drawing.Point(16, 10);
+            this.buttonAddResource.Location = new System.Drawing.Point(15, 10);
             this.buttonAddResource.Name = "buttonAddResource";
             this.buttonAddResource.Size = new System.Drawing.Size(110, 30);
             this.buttonAddResource.TabIndex = 1;
@@ -240,7 +285,6 @@
             this.resourcesDataGridView.AllowUserToDeleteRows = false;
             this.resourcesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.resourcesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id,
             this.ResourceName,
             this.LimitPerDay});
             this.resourcesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -248,26 +292,10 @@
             this.resourcesDataGridView.Name = "resourcesDataGridView";
             this.resourcesDataGridView.RowHeadersVisible = false;
             this.resourcesDataGridView.RowTemplate.Height = 24;
-            this.resourcesDataGridView.Size = new System.Drawing.Size(296, 270);
+            this.resourcesDataGridView.Size = new System.Drawing.Size(304, 220);
             this.resourcesDataGridView.TabIndex = 1;
+            this.resourcesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.resourcesDataGridView_CellValueChanged);
             this.resourcesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.resourcesDataGridView_DataError);
-            // 
-            // buttonDeleteResources
-            // 
-            this.buttonDeleteResources.Location = new System.Drawing.Point(151, 10);
-            this.buttonDeleteResources.Name = "buttonDeleteResources";
-            this.buttonDeleteResources.Size = new System.Drawing.Size(123, 30);
-            this.buttonDeleteResources.TabIndex = 2;
-            this.buttonDeleteResources.Text = "Delete selected";
-            this.buttonDeleteResources.UseVisualStyleBackColor = true;
-            this.buttonDeleteResources.Click += new System.EventHandler(this.buttonDeleteResources_Click);
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.Width = 30;
             // 
             // ResourceName
             // 
@@ -283,11 +311,69 @@
             this.LimitPerDay.Name = "LimitPerDay";
             this.LimitPerDay.Width = 130;
             // 
+            // buttonDeleteActivies
+            // 
+            this.buttonDeleteActivies.Location = new System.Drawing.Point(254, 10);
+            this.buttonDeleteActivies.Name = "buttonDeleteActivies";
+            this.buttonDeleteActivies.Size = new System.Drawing.Size(122, 30);
+            this.buttonDeleteActivies.TabIndex = 2;
+            this.buttonDeleteActivies.Text = "Delete Selected";
+            this.buttonDeleteActivies.UseVisualStyleBackColor = true;
+            this.buttonDeleteActivies.Click += new System.EventHandler(this.buttonDeleteActivies_Click);
+            // 
+            // ActivityId
+            // 
+            this.ActivityId.DataPropertyName = "Id";
+            this.ActivityId.HeaderText = "Id";
+            this.ActivityId.Name = "ActivityId";
+            this.ActivityId.ReadOnly = true;
+            this.ActivityId.Width = 50;
+            // 
+            // PreactivitiesColumn
+            // 
+            this.PreactivitiesColumn.DataPropertyName = "PreActivitiesDescription";
+            this.PreactivitiesColumn.HeaderText = "Pre-activities";
+            this.PreactivitiesColumn.Name = "PreactivitiesColumn";
+            this.PreactivitiesColumn.ReadOnly = true;
+            // 
+            // ActivityName
+            // 
+            this.ActivityName.DataPropertyName = "Name";
+            this.ActivityName.HeaderText = "Name";
+            this.ActivityName.Name = "ActivityName";
+            this.ActivityName.ReadOnly = true;
+            // 
+            // ActivityDuration
+            // 
+            this.ActivityDuration.DataPropertyName = "Duration";
+            this.ActivityDuration.HeaderText = "Duration";
+            this.ActivityDuration.Name = "ActivityDuration";
+            this.ActivityDuration.ReadOnly = true;
+            // 
+            // ActivityResources
+            // 
+            this.ActivityResources.DataPropertyName = "ResourceDescription";
+            this.ActivityResources.HeaderText = "Resources";
+            this.ActivityResources.Name = "ActivityResources";
+            this.ActivityResources.ReadOnly = true;
+            // 
+            // ActivityTimeConstraint
+            // 
+            this.ActivityTimeConstraint.DataPropertyName = "TimeConstraintDescription";
+            this.ActivityTimeConstraint.HeaderText = "Time Constraints";
+            this.ActivityTimeConstraint.Name = "ActivityTimeConstraint";
+            this.ActivityTimeConstraint.ReadOnly = true;
+            this.ActivityTimeConstraint.Width = 150;
+            // 
+            // saveActivityDialog
+            // 
+            this.saveActivityDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveActivityDialog_FileOk);
+            // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(830, 402);
+            this.ClientSize = new System.Drawing.Size(919, 402);
             this.Controls.Add(this.centerSplitContainer);
             this.Controls.Add(this.bottomPanel);
             this.Controls.Add(this.topPanel);
@@ -334,9 +420,18 @@
         private System.Windows.Forms.Panel resourceBottomPanel;
         private System.Windows.Forms.Button buttonAddResource;
         private System.Windows.Forms.Button buttonDeleteResources;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn ResourceName;
         private System.Windows.Forms.DataGridViewTextBoxColumn LimitPerDay;
+        private System.Windows.Forms.Button buttonEditActivity;
+        private System.Windows.Forms.Button buttonDeleteActivies;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ActivityId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PreactivitiesColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ActivityName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ActivityDuration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ActivityResources;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ActivityTimeConstraint;
+        private System.Windows.Forms.SaveFileDialog saveActivityDialog;
+        private System.Windows.Forms.OpenFileDialog openActivityDialog;
     }
 }
 
