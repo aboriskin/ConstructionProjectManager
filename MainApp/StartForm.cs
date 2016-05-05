@@ -13,6 +13,7 @@ using MainApp.Helpers;
 using MainApp.ViewModels;
 using MainApp.ViewModels.Forms;
 using Newtonsoft.Json;
+using Utils.Logging;
 
 namespace MainApp
 {
@@ -30,14 +31,22 @@ namespace MainApp
             this.activitiesDataGridView.AutoGenerateColumns = false;
             this.resourcesDataGridView.AutoGenerateColumns = false;
 
-            InitializeNewProject();
+            InitializeProject();
         }
 
-        private void InitializeNewProject()
+        private void InitializeProject(StartFormViewModel viewModel = null)
         {
-            _viewModel = new StartFormViewModel();
+            if (viewModel == null)
+            {
+                _viewModel = new StartFormViewModel();
+            }
+            else
+            {
+                _viewModel = viewModel;
+            }
             this.activitiesDataGridView.DataSource = _viewModel.Activities;
             this.resourcesDataGridView.DataSource = _viewModel.Resources;
+            Refresh();
         }
 
         private void addActivityButton_Click(object sender, EventArgs e)
@@ -77,7 +86,7 @@ namespace MainApp
         private void resourcesDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.ThrowException = false;
-            MessageBox.Show("This column only allows numeric values", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("This column allows only numeric values", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             e.Cancel = true;
         }
@@ -124,18 +133,113 @@ namespace MainApp
 
         private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InitializeNewProject();
+            InitializeProject();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveActivityDialog.ShowDialog();            
+            if (String.IsNullOrEmpty(GetFileName()))
+            {
+                SaveAs();
+            }
+            else
+            {
+                SaveData();
+            }
+        }
+
+        private void SaveAs()
+        {
+            saveActivityDialog.ShowDialog();
         }
 
         private void saveActivityDialog_FileOk(object sender, CancelEventArgs e)
         {
-            var serializedObj = JsonConvert.SerializeObject(_viewModel);
-            File.WriteAllText(saveActivityDialog.FileName, serializedObj);
+            SetFileName(saveActivityDialog.FileName);
+            SaveData();
+        }
+
+        private void SaveData()
+        {
+            try
+            {
+                var serializedObj = JsonConvert.SerializeObject(_viewModel);
+                File.WriteAllText(GetFileName(), serializedObj);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Some error happened while saving the file. You can see the log file for the details.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Log("Save Data error", ex);
+            }
+        }
+
+        private string _fileName = null;
+        private void SetFileName(string fileName)
+        {
+            _fileName = fileName;
+        }
+
+        private String GetFileName()
+        {
+            return _fileName;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.S))
+            {
+                saveToolStripMenuItem_Click(saveToolStripMenuItem, new EventArgs());
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveAs();
+        }        
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openActivityDialog.ShowDialog();
+        }
+
+        private void openActivityDialog_FileOk(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                var content = File.ReadAllText(openActivityDialog.FileName);
+                var viewModel = JsonConvert.DeserializeObject<StartFormViewModel>(content);
+                InitializeProject(viewModel);
+
+                SetFileName(openActivityDialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Some error happened while openning the file. Try it again. You can see the log file for the details.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Log("Load Data error", ex);
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();            
+        }
+
+        private void geneticAlgorithmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://en.wikipedia.org/wiki/Genetic_algorithm");
+        }
+
+        private void originalArticleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://pdfs.semanticscholar.org/4192/087466abe61298acedc053bb16bd735a3a02.pdf");
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var about = new AboutBoxForm();
+            about.ShowDialog();
         }
     }
 }

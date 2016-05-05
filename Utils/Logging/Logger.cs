@@ -12,5 +12,10 @@ namespace Utils.Logging
         {
             Console.WriteLine(message); //[TODO] Add log4net logging
         }
+
+        public static void Log(string message, Exception ex)
+        {
+            //[TODO] 
+        }
     }
 }

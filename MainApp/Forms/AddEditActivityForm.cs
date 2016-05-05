@@ -300,5 +300,13 @@ namespace MainApp.Forms
                 textBoxPreActivities.Text = PreActivitiesWatermark;
             }
         }
+
+        private void dataGridViewResources_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+            MessageBox.Show("This column allows only numeric values", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            e.Cancel = true;
+        }
     }
 }

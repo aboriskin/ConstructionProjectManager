@@ -204,6 +204,7 @@
             this.dataGridViewResources.RowTemplate.Height = 24;
             this.dataGridViewResources.Size = new System.Drawing.Size(268, 171);
             this.dataGridViewResources.TabIndex = 0;
+            this.dataGridViewResources.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewResources_DataError);
             // 
             // Resource
             // 
