@@ -61,27 +61,19 @@ namespace DomainModels.Managers
             {
                 activity.StartDate = _startDate.Value.AddDays(activity.ActivityDayIndex);
             }
-
-            var earliestConstraints = activity.TimeConstraints.SafeWhere(c => c.ConstraintType == TimeConstraintType.Earliest).ToList();
-            if (!earliestConstraints.IsNullOrEmpty())
+            else
             {
-                var earliest = earliestConstraints.Min(c => c.ConstraintDate);
-
-                if (_startDate == null)
+                var earliestConstraints =
+                    activity.TimeConstraints.SafeWhere(c => c.ConstraintType == TimeConstraintType.Earliest).ToList();
+                if (!earliestConstraints.IsNullOrEmpty())
                 {
+                    var earliest = earliestConstraints.Min(c => c.ConstraintDate).Date;
+
                     activity.StartDate = earliest;
                     _startDate = activity.StartDate.Value.AddDays(-activity.ActivityDayIndex);
 
-                    SetStartDateForPreviousActivities(activity, orderActivities);                    
+                    SetStartDateForPreviousActivities(activity, orderActivities);
                 }
-                else
-                {
-                    if (activity.StartDate < earliest)
-                    {
-                        activity.StartDate = earliest;
-                        activity.ActivityDayIndex = (int)(earliest - _startDate).Value.TotalDays;
-                    }
-                }    
             }
         }
 
@@ -101,7 +93,7 @@ namespace DomainModels.Managers
             Activity activity,
             Dictionary<int, Activity> activityMap)
         {
-            var timeRangeAfterPreActivity = GetTimeRangeAfterPreActivity(activity, activityMap);
+            var timeRangeAfterPreActivity = GetTimeRangeAfterPreActivityAndConstraints(activity, activityMap);
 
             var resourceConsumptionPerDay = activity.GetResourceConsumption(_resources);
 
@@ -135,7 +127,7 @@ namespace DomainModels.Managers
             }
         }
 
-        private DateRange GetTimeRangeAfterPreActivity(
+        private DateRange GetTimeRangeAfterPreActivityAndConstraints(
             Activity activity,
             Dictionary<int, Activity> activityMap)
         {
@@ -150,6 +142,18 @@ namespace DomainModels.Managers
                     var preActivity = activityMap[id];
                     return preActivity.ActivityDayIndex + preActivity.Duration;
                 });
+
+            //You can take into account time constraint only if the start point is already known
+            if (_startDate != null)
+            {
+                var earliestConstraints = activity.TimeConstraints.SafeWhere(c => c.ConstraintType == TimeConstraintType.Earliest).ToList();
+                if (!earliestConstraints.IsNullOrEmpty())
+                {
+                    var earliest = earliestConstraints.Min(c => c.ConstraintDate);
+                    var constraintDateIndex = (int) (earliest.Date - _startDate.Value.Date).TotalDays;
+                    lastIndexFinish = Math.Max(lastIndexFinish, constraintDateIndex);
+                }
+            }
 
             return new DateRange
             {

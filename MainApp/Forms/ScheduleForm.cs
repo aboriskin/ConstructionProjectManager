@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DomainModels.Helpers;
 using DomainModels.Models;
+using MainApp.Helpers;
+using Utils.Logging;
 
 namespace MainApp.Forms
 {
@@ -21,7 +23,7 @@ namespace MainApp.Forms
         public ScheduleForm(
             int duration,
             List<Activity> activities,
-            List<Resource> resources )
+            List<Resource> resources)
         {
             _duration = duration;
             _activities = activities;
@@ -32,7 +34,6 @@ namespace MainApp.Forms
         private void ScheduleForm_Load(object sender, EventArgs e)
         {
             labelTotalDays.Text = "Total Days: " + _duration;
-
             InitializeCommonPropertiesForSchedule();
             InitializeColumns();
             InitializeResourcesRows();
@@ -41,7 +42,7 @@ namespace MainApp.Forms
 
         private void InitializeCommonPropertiesForSchedule()
         {
-            dataGridViewSchedule.AutoGenerateColumns = false;            
+            dataGridViewSchedule.AutoGenerateColumns = false;
         }
 
         private void InitializeActivityRows()
@@ -80,7 +81,7 @@ namespace MainApp.Forms
 
         private void InitializeColumns()
         {
-            int fillWeight = Math.Min(50, 65000/_duration);
+            int fillWeight = Math.Min(50, 65000 / _duration);
 
             dataGridViewSchedule.Columns.Add(new DataGridViewTextBoxColumn()
             {
@@ -98,6 +99,11 @@ namespace MainApp.Forms
                     SortMode = DataGridViewColumnSortMode.NotSortable,
                     HeaderText = i.ToString()
                 });
+
+                if (i % 500 == 0) //workaround not to get ContextSwitchDeadlock: https://earlybites.wordpress.com/2012/04/10/resolution-context-switch-deadlock-was-detected/
+                {
+                    Application.DoEvents();
+                }
             }
         }
 
@@ -107,19 +113,21 @@ namespace MainApp.Forms
 
             foreach (var resource in _resources)
             {
-                dict.Add(resource.Id, new ResourceConsumptionTimeline(resource));
+                var timeline = new ResourceConsumptionTimeline(resource);
+                timeline.EnsureTimeLineHasEnoughLength(_duration);
+                dict.Add(resource.Id, timeline);
             }
 
             foreach (var activity in _activities)
             {
                 if (activity.Duration <= 0)
                 {
-                    continue;                    
+                    continue;
                 }
 
                 var range = new DateRange(activity.ActivityDayIndex, activity.GetActivityFinalIndex());
                 foreach (var consumption in activity.ResourceConsumptionsPerDay)
-                {                    
+                {
                     dict[consumption.ResourceId].Consume(range, consumption.Amount);
                 }
             }
@@ -128,9 +136,34 @@ namespace MainApp.Forms
 
         private Color GetColor(decimal freeResource, decimal maxAmount)
         {
-            var rate = freeResource/maxAmount;
+            var rate = freeResource / maxAmount;
 
-            return Color.FromArgb(255, (int)((1 - rate)*255), (int)(rate *255), 0);
+            return Color.FromArgb(255, (int)((1 - rate) * 255), (int)(rate * 255), 0);
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            saveCsvDialog.ShowDialog();
+        }
+
+        private void saveCsvDialog_FileOk(object sender, CancelEventArgs e)
+        {
+            var exporter = new CsvExporter();
+
+            try
+            {
+                exporter.Export(saveCsvDialog.FileName, _activities);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Csv Export", ex);
+                MessageBox.Show("Some error happened during the csv export. Please look at the logs to figure it out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

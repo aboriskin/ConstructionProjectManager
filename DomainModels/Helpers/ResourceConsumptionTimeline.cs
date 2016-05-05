@@ -71,7 +71,7 @@ namespace DomainModels.Helpers
             return true;
         }
 
-        private void EnsureTimeLineHasEnoughLength(int endIndex)
+        public void EnsureTimeLineHasEnoughLength(int endIndex)
         {
             while (_timeline.Count <= endIndex)
             {

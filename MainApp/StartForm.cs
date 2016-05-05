@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DomainModels.Managers;
+using GeneticAlgorithm.Managers;
 using MainApp.Forms;
 using MainApp.Helpers;
 using MainApp.ViewModels;
@@ -262,15 +263,29 @@ namespace MainApp
             var domainResources = _viewModel.GetDomainResources();
             var solver = new Solver(domainActivities, domainResources);
 
-            var bestResultsKeeper = solver.Run(int.Parse(textBoxPopulationSize.Text),
+            var worker = new BackgroundWorker();
+            BestChromosomesKeeper<int> bestResultsKeeper = null;
+            worker.DoWork += (item, args) =>
+            {
+                bestResultsKeeper = solver.Run(int.Parse(textBoxPopulationSize.Text),
                 int.Parse(textBoxMaxIterations.Text),
                 double.Parse(textBoxCrossoverProbability.Text),
                 double.Parse(textBoxMutationProbability.Text));
+            };
 
-            var duration = solver.CalculateSchedule(bestResultsKeeper.GetBestResults()[0].Chromosome);
+            worker.RunWorkerCompleted += (item, args) =>
+            {
+                pictureBoxLoading.Visible = false;
+                labelStatus.Text = "The solution is found. Preparing the form ...";
+                var duration = solver.CalculateSchedule(bestResultsKeeper.GetBestResults()[0].Chromosome);
+                var form = new ScheduleForm((int)duration, domainActivities, domainResources);
+                form.ShowDialog();
+                labelStatus.Text = @"Enter the data and click ""Run""";
+            };
 
-            var form = new ScheduleForm((int)duration, domainActivities, domainResources);
-            form.ShowDialog();
+            pictureBoxLoading.Visible = true;
+            labelStatus.Text = "Processing ...";
+            worker.RunWorkerAsync();            
         }
 
         private string ValidateAlgorithmParams()

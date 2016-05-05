@@ -19,7 +19,7 @@ namespace DomainModels.Models
 
         public int ActivityDayIndex { get; set; }
         public DateTime? StartDate { get; set; }
-        public DateTime? FinishDate => StartDate?.AddDays(Duration);
+        public DateTime? FinishDate => StartDate?.AddDays(Math.Max(Duration - 1, 0));
 
         public void ClearCalculatedValues()
         {

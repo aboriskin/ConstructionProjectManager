@@ -78,6 +78,11 @@ namespace MainApp.ViewModels.Forms
                 return "Enter at least 1 resource and 1 activity for running the algorithm";
             }
 
+            if (Activities.All(a => a.From == null))
+            {
+                return "There must be at least one 'X ≤ Start/Finish' condition";
+            }
+
             foreach (var resource in Resources)
             {
                 if (resource.LimitPerDay <= 0)

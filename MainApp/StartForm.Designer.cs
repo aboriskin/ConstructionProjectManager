@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartForm));
             this.topPanel = new System.Windows.Forms.Panel();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,6 +42,15 @@
             this.originalArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bottomPanel = new System.Windows.Forms.Panel();
+            this.buttonRunAlgorithm = new System.Windows.Forms.Button();
+            this.textBoxMutationProbability = new System.Windows.Forms.TextBox();
+            this.labelMutationProbability = new System.Windows.Forms.Label();
+            this.textBoxCrossoverProbability = new System.Windows.Forms.TextBox();
+            this.labelCrossoverProbability = new System.Windows.Forms.Label();
+            this.textBoxMaxIterations = new System.Windows.Forms.TextBox();
+            this.labelMaxIterations = new System.Windows.Forms.Label();
+            this.textBoxPopulationSize = new System.Windows.Forms.TextBox();
+            this.labelPopulationSize = new System.Windows.Forms.Label();
             this.centerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.activitiesDataGridView = new System.Windows.Forms.DataGridView();
             this.ActivityId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,15 +71,8 @@
             this.buttonAddResource = new System.Windows.Forms.Button();
             this.saveActivityDialog = new System.Windows.Forms.SaveFileDialog();
             this.openActivityDialog = new System.Windows.Forms.OpenFileDialog();
-            this.labelPopulationSize = new System.Windows.Forms.Label();
-            this.textBoxPopulationSize = new System.Windows.Forms.TextBox();
-            this.textBoxMaxIterations = new System.Windows.Forms.TextBox();
-            this.labelMaxIterations = new System.Windows.Forms.Label();
-            this.textBoxMutationProbability = new System.Windows.Forms.TextBox();
-            this.labelMutationProbability = new System.Windows.Forms.Label();
-            this.textBoxCrossoverProbability = new System.Windows.Forms.TextBox();
-            this.labelCrossoverProbability = new System.Windows.Forms.Label();
-            this.buttonRunAlgorithm = new System.Windows.Forms.Button();
+            this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
+            this.labelStatus = new System.Windows.Forms.Label();
             this.topPanel.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             this.bottomPanel.SuspendLayout();
@@ -81,6 +84,7 @@
             this.activityBottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resourcesDataGridView)).BeginInit();
             this.resourceBottomPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // topPanel
@@ -119,14 +123,14 @@
             // newProjectToolStripMenuItem
             // 
             this.newProjectToolStripMenuItem.Name = "newProjectToolStripMenuItem";
-            this.newProjectToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.newProjectToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.newProjectToolStripMenuItem.Text = "New Project";
             this.newProjectToolStripMenuItem.Click += new System.EventHandler(this.newProjectToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -134,21 +138,21 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -185,6 +189,8 @@
             // 
             // bottomPanel
             // 
+            this.bottomPanel.Controls.Add(this.labelStatus);
+            this.bottomPanel.Controls.Add(this.pictureBoxLoading);
             this.bottomPanel.Controls.Add(this.buttonRunAlgorithm);
             this.bottomPanel.Controls.Add(this.textBoxMutationProbability);
             this.bottomPanel.Controls.Add(this.labelMutationProbability);
@@ -195,10 +201,88 @@
             this.bottomPanel.Controls.Add(this.textBoxPopulationSize);
             this.bottomPanel.Controls.Add(this.labelPopulationSize);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottomPanel.Location = new System.Drawing.Point(0, 302);
+            this.bottomPanel.Location = new System.Drawing.Point(0, 375);
             this.bottomPanel.Name = "bottomPanel";
             this.bottomPanel.Size = new System.Drawing.Size(919, 100);
             this.bottomPanel.TabIndex = 1;
+            // 
+            // buttonRunAlgorithm
+            // 
+            this.buttonRunAlgorithm.Location = new System.Drawing.Point(702, 15);
+            this.buttonRunAlgorithm.Name = "buttonRunAlgorithm";
+            this.buttonRunAlgorithm.Size = new System.Drawing.Size(109, 30);
+            this.buttonRunAlgorithm.TabIndex = 9;
+            this.buttonRunAlgorithm.Text = "Run";
+            this.buttonRunAlgorithm.UseVisualStyleBackColor = true;
+            this.buttonRunAlgorithm.Click += new System.EventHandler(this.buttonRunAlgorithm_Click);
+            // 
+            // textBoxMutationProbability
+            // 
+            this.textBoxMutationProbability.Location = new System.Drawing.Point(453, 57);
+            this.textBoxMutationProbability.Name = "textBoxMutationProbability";
+            this.textBoxMutationProbability.Size = new System.Drawing.Size(123, 22);
+            this.textBoxMutationProbability.TabIndex = 7;
+            this.textBoxMutationProbability.Text = "0,01";
+            // 
+            // labelMutationProbability
+            // 
+            this.labelMutationProbability.AutoSize = true;
+            this.labelMutationProbability.Location = new System.Drawing.Point(300, 57);
+            this.labelMutationProbability.Name = "labelMutationProbability";
+            this.labelMutationProbability.Size = new System.Drawing.Size(136, 17);
+            this.labelMutationProbability.TabIndex = 6;
+            this.labelMutationProbability.Text = "Mutation Probability:";
+            // 
+            // textBoxCrossoverProbability
+            // 
+            this.textBoxCrossoverProbability.Location = new System.Drawing.Point(453, 19);
+            this.textBoxCrossoverProbability.Name = "textBoxCrossoverProbability";
+            this.textBoxCrossoverProbability.Size = new System.Drawing.Size(123, 22);
+            this.textBoxCrossoverProbability.TabIndex = 5;
+            this.textBoxCrossoverProbability.Text = "0,7";
+            // 
+            // labelCrossoverProbability
+            // 
+            this.labelCrossoverProbability.AutoSize = true;
+            this.labelCrossoverProbability.Location = new System.Drawing.Point(300, 19);
+            this.labelCrossoverProbability.Name = "labelCrossoverProbability";
+            this.labelCrossoverProbability.Size = new System.Drawing.Size(146, 17);
+            this.labelCrossoverProbability.TabIndex = 4;
+            this.labelCrossoverProbability.Text = "Crossover Probability:";
+            // 
+            // textBoxMaxIterations
+            // 
+            this.textBoxMaxIterations.Location = new System.Drawing.Point(130, 54);
+            this.textBoxMaxIterations.Name = "textBoxMaxIterations";
+            this.textBoxMaxIterations.Size = new System.Drawing.Size(123, 22);
+            this.textBoxMaxIterations.TabIndex = 3;
+            this.textBoxMaxIterations.Text = "100";
+            // 
+            // labelMaxIterations
+            // 
+            this.labelMaxIterations.AutoSize = true;
+            this.labelMaxIterations.Location = new System.Drawing.Point(13, 54);
+            this.labelMaxIterations.Name = "labelMaxIterations";
+            this.labelMaxIterations.Size = new System.Drawing.Size(99, 17);
+            this.labelMaxIterations.TabIndex = 2;
+            this.labelMaxIterations.Text = "Max Iterations:";
+            // 
+            // textBoxPopulationSize
+            // 
+            this.textBoxPopulationSize.Location = new System.Drawing.Point(130, 16);
+            this.textBoxPopulationSize.Name = "textBoxPopulationSize";
+            this.textBoxPopulationSize.Size = new System.Drawing.Size(123, 22);
+            this.textBoxPopulationSize.TabIndex = 1;
+            this.textBoxPopulationSize.Text = "15";
+            // 
+            // labelPopulationSize
+            // 
+            this.labelPopulationSize.AutoSize = true;
+            this.labelPopulationSize.Location = new System.Drawing.Point(13, 16);
+            this.labelPopulationSize.Name = "labelPopulationSize";
+            this.labelPopulationSize.Size = new System.Drawing.Size(110, 17);
+            this.labelPopulationSize.TabIndex = 0;
+            this.labelPopulationSize.Text = "Population Size:";
             // 
             // centerSplitContainer
             // 
@@ -217,8 +301,8 @@
             this.centerSplitContainer.Panel2.Controls.Add(this.resourcesDataGridView);
             this.centerSplitContainer.Panel2.Controls.Add(this.resourceBottomPanel);
             this.centerSplitContainer.Panel2MinSize = 260;
-            this.centerSplitContainer.Size = new System.Drawing.Size(919, 270);
-            this.centerSplitContainer.SplitterDistance = 611;
+            this.centerSplitContainer.Size = new System.Drawing.Size(919, 343);
+            this.centerSplitContainer.SplitterDistance = 647;
             this.centerSplitContainer.TabIndex = 2;
             // 
             // activitiesDataGridView
@@ -239,7 +323,7 @@
             this.activitiesDataGridView.ReadOnly = true;
             this.activitiesDataGridView.RowHeadersVisible = false;
             this.activitiesDataGridView.RowTemplate.Height = 24;
-            this.activitiesDataGridView.Size = new System.Drawing.Size(611, 220);
+            this.activitiesDataGridView.Size = new System.Drawing.Size(647, 293);
             this.activitiesDataGridView.TabIndex = 0;
             // 
             // ActivityId
@@ -293,9 +377,9 @@
             this.activityBottomPanel.Controls.Add(this.buttonEditActivity);
             this.activityBottomPanel.Controls.Add(this.addActivityButton);
             this.activityBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.activityBottomPanel.Location = new System.Drawing.Point(0, 220);
+            this.activityBottomPanel.Location = new System.Drawing.Point(0, 293);
             this.activityBottomPanel.Name = "activityBottomPanel";
-            this.activityBottomPanel.Size = new System.Drawing.Size(611, 50);
+            this.activityBottomPanel.Size = new System.Drawing.Size(647, 50);
             this.activityBottomPanel.TabIndex = 1;
             // 
             // buttonDeleteActivies
@@ -341,7 +425,7 @@
             this.resourcesDataGridView.Name = "resourcesDataGridView";
             this.resourcesDataGridView.RowHeadersVisible = false;
             this.resourcesDataGridView.RowTemplate.Height = 24;
-            this.resourcesDataGridView.Size = new System.Drawing.Size(304, 220);
+            this.resourcesDataGridView.Size = new System.Drawing.Size(268, 293);
             this.resourcesDataGridView.TabIndex = 1;
             this.resourcesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.resourcesDataGridView_CellValueChanged);
             this.resourcesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.resourcesDataGridView_DataError);
@@ -366,9 +450,9 @@
             this.resourceBottomPanel.Controls.Add(this.buttonDeleteResources);
             this.resourceBottomPanel.Controls.Add(this.buttonAddResource);
             this.resourceBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.resourceBottomPanel.Location = new System.Drawing.Point(0, 220);
+            this.resourceBottomPanel.Location = new System.Drawing.Point(0, 293);
             this.resourceBottomPanel.Name = "resourceBottomPanel";
-            this.resourceBottomPanel.Size = new System.Drawing.Size(304, 50);
+            this.resourceBottomPanel.Size = new System.Drawing.Size(268, 50);
             this.resourceBottomPanel.TabIndex = 2;
             // 
             // buttonDeleteResources
@@ -401,94 +485,36 @@
             this.openActivityDialog.Filter = "JSON|*.json|All Files|*.*";
             this.openActivityDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openActivityDialog_FileOk);
             // 
-            // labelPopulationSize
+            // pictureBoxLoading
             // 
-            this.labelPopulationSize.AutoSize = true;
-            this.labelPopulationSize.Location = new System.Drawing.Point(13, 16);
-            this.labelPopulationSize.Name = "labelPopulationSize";
-            this.labelPopulationSize.Size = new System.Drawing.Size(110, 17);
-            this.labelPopulationSize.TabIndex = 0;
-            this.labelPopulationSize.Text = "Population Size:";
+            this.pictureBoxLoading.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLoading.Image")));
+            this.pictureBoxLoading.Location = new System.Drawing.Point(841, 19);
+            this.pictureBoxLoading.Name = "pictureBoxLoading";
+            this.pictureBoxLoading.Size = new System.Drawing.Size(24, 24);
+            this.pictureBoxLoading.TabIndex = 10;
+            this.pictureBoxLoading.TabStop = false;
+            this.pictureBoxLoading.Visible = false;
             // 
-            // textBoxPopulationSize
+            // labelStatus
             // 
-            this.textBoxPopulationSize.Location = new System.Drawing.Point(130, 16);
-            this.textBoxPopulationSize.Name = "textBoxPopulationSize";
-            this.textBoxPopulationSize.Size = new System.Drawing.Size(123, 22);
-            this.textBoxPopulationSize.TabIndex = 1;
-            this.textBoxPopulationSize.Text = "15";
-            // 
-            // textBoxMaxIterations
-            // 
-            this.textBoxMaxIterations.Location = new System.Drawing.Point(130, 54);
-            this.textBoxMaxIterations.Name = "textBoxMaxIterations";
-            this.textBoxMaxIterations.Size = new System.Drawing.Size(123, 22);
-            this.textBoxMaxIterations.TabIndex = 3;
-            this.textBoxMaxIterations.Text = "100";
-            // 
-            // labelMaxIterations
-            // 
-            this.labelMaxIterations.AutoSize = true;
-            this.labelMaxIterations.Location = new System.Drawing.Point(13, 54);
-            this.labelMaxIterations.Name = "labelMaxIterations";
-            this.labelMaxIterations.Size = new System.Drawing.Size(99, 17);
-            this.labelMaxIterations.TabIndex = 2;
-            this.labelMaxIterations.Text = "Max Iterations:";
-            // 
-            // textBoxMutationProbability
-            // 
-            this.textBoxMutationProbability.Location = new System.Drawing.Point(453, 57);
-            this.textBoxMutationProbability.Name = "textBoxMutationProbability";
-            this.textBoxMutationProbability.Size = new System.Drawing.Size(123, 22);
-            this.textBoxMutationProbability.TabIndex = 7;
-            this.textBoxMutationProbability.Text = "0,01";
-            // 
-            // labelMutationProbability
-            // 
-            this.labelMutationProbability.AutoSize = true;
-            this.labelMutationProbability.Location = new System.Drawing.Point(300, 57);
-            this.labelMutationProbability.Name = "labelMutationProbability";
-            this.labelMutationProbability.Size = new System.Drawing.Size(136, 17);
-            this.labelMutationProbability.TabIndex = 6;
-            this.labelMutationProbability.Text = "Mutation Probability:";
-            // 
-            // textBoxCrossoverProbability
-            // 
-            this.textBoxCrossoverProbability.Location = new System.Drawing.Point(453, 19);
-            this.textBoxCrossoverProbability.Name = "textBoxCrossoverProbability";
-            this.textBoxCrossoverProbability.Size = new System.Drawing.Size(123, 22);
-            this.textBoxCrossoverProbability.TabIndex = 5;
-            this.textBoxCrossoverProbability.Text = "0,7";
-            // 
-            // labelCrossoverProbability
-            // 
-            this.labelCrossoverProbability.AutoSize = true;
-            this.labelCrossoverProbability.Location = new System.Drawing.Point(300, 19);
-            this.labelCrossoverProbability.Name = "labelCrossoverProbability";
-            this.labelCrossoverProbability.Size = new System.Drawing.Size(146, 17);
-            this.labelCrossoverProbability.TabIndex = 4;
-            this.labelCrossoverProbability.Text = "Crossover Probability:";
-            // 
-            // buttonRunAlgorithm
-            // 
-            this.buttonRunAlgorithm.Location = new System.Drawing.Point(632, 35);
-            this.buttonRunAlgorithm.Name = "buttonRunAlgorithm";
-            this.buttonRunAlgorithm.Size = new System.Drawing.Size(109, 30);
-            this.buttonRunAlgorithm.TabIndex = 3;
-            this.buttonRunAlgorithm.Text = "Run";
-            this.buttonRunAlgorithm.UseVisualStyleBackColor = true;
-            this.buttonRunAlgorithm.Click += new System.EventHandler(this.buttonRunAlgorithm_Click);
+            this.labelStatus.Location = new System.Drawing.Point(598, 62);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(321, 23);
+            this.labelStatus.TabIndex = 11;
+            this.labelStatus.Text = "Enter the data and click \"Run\"";
+            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(919, 402);
+            this.ClientSize = new System.Drawing.Size(919, 475);
             this.Controls.Add(this.centerSplitContainer);
             this.Controls.Add(this.bottomPanel);
             this.Controls.Add(this.topPanel);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mainMenuStrip;
+            this.MinimumSize = new System.Drawing.Size(937, 522);
             this.Name = "StartForm";
             this.Text = "Construction Project Manager";
             this.Load += new System.EventHandler(this.StartForm_Load);
@@ -506,6 +532,7 @@
             this.activityBottomPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.resourcesDataGridView)).EndInit();
             this.resourceBottomPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -554,6 +581,8 @@
         private System.Windows.Forms.Label labelMaxIterations;
         private System.Windows.Forms.TextBox textBoxPopulationSize;
         private System.Windows.Forms.Label labelPopulationSize;
+        private System.Windows.Forms.PictureBox pictureBoxLoading;
+        private System.Windows.Forms.Label labelStatus;
     }
 }
 

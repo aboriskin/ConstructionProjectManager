@@ -235,6 +235,11 @@ namespace MainApp.Forms
                 return "Duration field must be a numeric";
             }
 
+            if (int.Parse(textBoxDuration.Text) < 0)
+            {
+                return "Duration cannot be negative";
+            }
+
             if (!textBoxPreActivities.Text.Equals(PreActivitiesWatermark))
             {
                 var preActivitiesRegex = new Regex(@"^[,\d ]*$");

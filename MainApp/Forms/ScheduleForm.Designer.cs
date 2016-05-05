@@ -33,6 +33,7 @@
             this.buttonExport = new System.Windows.Forms.Button();
             this.labelTotalDays = new System.Windows.Forms.Label();
             this.dataGridViewSchedule = new System.Windows.Forms.DataGridView();
+            this.saveCsvDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSchedule)).BeginInit();
             this.SuspendLayout();
@@ -57,6 +58,7 @@
             this.buttonClose.TabIndex = 2;
             this.buttonClose.Text = "Close";
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonExport
             // 
@@ -66,6 +68,7 @@
             this.buttonExport.TabIndex = 1;
             this.buttonExport.Text = "Export to CSV";
             this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // labelTotalDays
             // 
@@ -89,6 +92,11 @@
             this.dataGridViewSchedule.RowTemplate.Height = 24;
             this.dataGridViewSchedule.Size = new System.Drawing.Size(724, 411);
             this.dataGridViewSchedule.TabIndex = 1;
+            // 
+            // saveCsvDialog
+            // 
+            this.saveCsvDialog.Filter = "CSV|*.csv|All Files|*.*";
+            this.saveCsvDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveCsvDialog_FileOk);
             // 
             // ScheduleForm
             // 
@@ -114,5 +122,6 @@
         private System.Windows.Forms.Button buttonExport;
         private System.Windows.Forms.Label labelTotalDays;
         private System.Windows.Forms.DataGridView dataGridViewSchedule;
+        private System.Windows.Forms.SaveFileDialog saveCsvDialog;
     }
 }

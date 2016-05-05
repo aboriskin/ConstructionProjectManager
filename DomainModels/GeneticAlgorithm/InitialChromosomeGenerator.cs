@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace DomainModels.GeneticAlgorithm
                 }
 
                 var index = RandomHelper.GetInt(minIndex, maxIndex);
-                chromosome.Genes.Insert(index, item.Id);
+                chromosome.Genes.Insert(index, item.Id);                
             }
 
             return chromosome;
@@ -51,21 +52,23 @@ namespace DomainModels.GeneticAlgorithm
             Chromosome<int> chromosome,
             Activity activity)
         {
-            if (activity.PreActivityIds.IsNullOrEmpty() ||
-                !chromosome.Genes.Any(id => activity.PreActivityIds.SafeContains(id)))
+            var preActivityIds = GetAllPreActivityIds(activity)
+                .Where(id => chromosome.Genes.Contains(id)).ToList();
+
+            if (preActivityIds.IsNullOrEmpty())
             {
                 return 0;
             }
 
-            return activity.PreActivityIds.Max(id => chromosome.Genes.IndexOf(id)) + 1;
+            return preActivityIds.Max(id => chromosome.Genes.IndexOf(id)) + 1;
         }
 
         private int GetMaxInsertIndex(
             Chromosome<int> chromosome,
             Activity activity)
         {
-            var dependentActivityIds =
-                chromosome.Genes.Where(id => _activityMap[id].PreActivityIds.SafeContains(activity.Id)).ToList();
+            var dependentActivityIds = GetAllPostActivityIds(activity);
+            dependentActivityIds = dependentActivityIds.Where(id => chromosome.Genes.SafeContains(id)).ToList();
 
             if (dependentActivityIds.IsNullOrEmpty())
             {
@@ -73,6 +76,36 @@ namespace DomainModels.GeneticAlgorithm
             }
 
             return dependentActivityIds.Min(id => chromosome.Genes.IndexOf(id));
+        }
+
+        private List<int> GetAllPreActivityIds(Activity activity)
+        {
+            var result = activity.PreActivityIds.ToList();
+
+            if (!activity.PreActivityIds.IsNullOrEmpty())
+            {
+                foreach (var preActivityId in activity.PreActivityIds)
+                {
+                    var preActivity = _activityMap[preActivityId];
+                    result.AddRange(GetAllPreActivityIds(preActivity));
+                }
+            }
+
+            return result.Distinct().ToList();
+        }
+
+        private List<int> GetAllPostActivityIds(Activity activity)
+        {
+            var result = new List<int>();
+
+            var dependingActivities = _activities.Where(a => a.PreActivityIds.SafeContains(activity.Id));
+            foreach (var item in dependingActivities)
+            {
+                result.Add(item.Id);
+                result.AddRange(GetAllPostActivityIds(item));
+            }
+
+            return result.Distinct().ToList();
         }
     }
 }

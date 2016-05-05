@@ -68,6 +68,7 @@
     <Compile Include="Forms\ScheduleForm.Designer.cs">
       <DependentUpon>ScheduleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CsvExporter.cs" />
     <Compile Include="Helpers\DataGridViewHelper.cs" />
     <Compile Include="StartForm.cs">
       <SubType>Form</SubType>
@@ -129,6 +130,9 @@
       <Project>{E1767943-03EC-4501-BC00-3A504EC8E66F}</Project>
       <Name>Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Images\loader.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

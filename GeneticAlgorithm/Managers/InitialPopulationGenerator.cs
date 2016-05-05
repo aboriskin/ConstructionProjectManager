@@ -53,7 +53,7 @@ namespace GeneticAlgorithm.Managers
 
             if (currentIteration == maxIterations)
             {
-                throw new GeneticAlgorithmException("Cannot generate the initial population. It seems the data contains some circular dependencies. Please fix it and try one more time.");
+                throw new GeneticAlgorithmException("Cannot generate the initial population. It seems the data contains some circular dependencies or inconsistent time constraints. Please fix it and try one more time.");
             }
 
             return result;
