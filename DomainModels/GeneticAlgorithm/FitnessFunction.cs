@@ -34,7 +34,7 @@ namespace DomainModels.GeneticAlgorithm
             var orderedActivities = FormOrderedActivities(chromosome);
 
             isValid = _schedulerManager.Schedule(orderedActivities);
-            return orderedActivities.Max(a => a.ActivityDayIndex + a.Duration);
+            return orderedActivities.Max(a => a.GetActivityFinalIndex()) + 1;
         }
 
         private List<Activity> FormOrderedActivities(Chromosome<int> chromosome)

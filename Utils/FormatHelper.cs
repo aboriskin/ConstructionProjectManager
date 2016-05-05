@@ -19,5 +19,11 @@ namespace Utils
             decimal number;
             return decimal.TryParse(str, out number);
         }
+
+        public static bool ValidateProbabity(string str)
+        {
+            double number;
+            return double.TryParse(str, out number) && number >= 0 && number <= 1;
+        }
     }
 }

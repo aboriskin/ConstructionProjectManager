@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("")]
+[assembly: AssemblyTitle("the application")]
 [assembly: AssemblyDescription("The project is a completed full-featured application based on my university research. It unites the genetic algorithm with a heuristic scheduling approach to create the minimum-length plan for limited resoures. All the details including ordering crossover and permutative mutation can be found in the diploma.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Voronezh State University")]

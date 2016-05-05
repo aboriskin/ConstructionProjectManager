@@ -60,7 +60,7 @@ namespace DomainModels.Helpers
                 return true;
             }
 
-            for (int i = 0; i <= duration; i++)
+            for (int i = 0; i < duration; i++)
             {
                 if (_timeline[startIndex + i] < amountPerDay)
                 {
@@ -80,6 +80,11 @@ namespace DomainModels.Helpers
                     _timeline.Add(_resource.MaxAvailableAmountPerDay);
                 }
             }
+        }
+
+        public List<decimal> GetTimeline()
+        {
+            return _timeline;            
         }
     }
 }

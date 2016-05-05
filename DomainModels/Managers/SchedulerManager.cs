@@ -37,6 +37,7 @@ namespace DomainModels.Managers
                     return false;
 
                 ApplyTimeConstraintsAndSetAustronomicalDate(activity, orderedActivities);
+                ConsumeResources(activity);
             }
 
             return orderedActivities.All(a => a.Validate());
@@ -104,7 +105,9 @@ namespace DomainModels.Managers
 
             var resourceConsumptionPerDay = activity.GetResourceConsumption(_resources);
 
-            var availableTimeRange = FindAvailableRange(timeRangeAfterPreActivity, activity.Duration,
+            var availableTimeRange = FindAvailableRange(
+                timeRangeAfterPreActivity, 
+                activity.Duration,
                 resourceConsumptionPerDay);
 
             if (availableTimeRange == null)
@@ -112,14 +115,20 @@ namespace DomainModels.Managers
                 return false;
             }
 
-            ConsumeResources(availableTimeRange, resourceConsumptionPerDay);
             activity.ActivityDayIndex = availableTimeRange.StartIndex.Value;
 
             return true;
         }
 
-        private void ConsumeResources(DateRange availableTimeRange, Dictionary<int, decimal> resourceConsumptionPerDay)
+        private void ConsumeResources(Activity activity)
         {
+            if (activity.Duration <= 0)
+            {
+                return;
+            }
+
+            var availableTimeRange = new DateRange(activity.ActivityDayIndex, activity.GetActivityFinalIndex());
+            var resourceConsumptionPerDay = activity.GetResourceConsumption(_resources);
             foreach (var resourceLine in _timelines.Values)
             {
                 resourceLine.Consume(availableTimeRange, resourceConsumptionPerDay[resourceLine.ResourceId]);
@@ -154,7 +163,8 @@ namespace DomainModels.Managers
             {
                 if (_timelines.All(t => t.Value.IsResourceAvailable(index, duration, resouceConsumptionPerDay[t.Key])))
                 {
-                    return new DateRange(index, index + duration - 1);
+                    var endIndex = Math.Max(index, index + duration - 1);
+                    return new DateRange(index, endIndex);
                 }
             }
 

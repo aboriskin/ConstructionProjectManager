@@ -15,11 +15,10 @@ namespace GeneticAlgorithm.Implementations
         private const double Eps = 1e-3;
 
         public TerminationFunction(
-            int generationLimit,
-            int rangeSizeToCheckFitnessValue)
+            int generationLimit)
         {
             _generationLimit = generationLimit;
-            _rangeSizeToCheckFitnessValue = rangeSizeToCheckFitnessValue;
+            _rangeSizeToCheckFitnessValue = generationLimit / 2;
         }
 
         private readonly int _generationLimit;

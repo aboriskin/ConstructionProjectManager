@@ -32,7 +32,7 @@ namespace TestApp
             var crossoverStrategy = new OrderedCrossoverStrategy<int>(probability: 0.65);
             var mutationStrategy = new MutationStrategy<int>(probability: 0.01);
             var chromosomeValidator = new ChromosomeValidator(data.Activities);
-            var terminationFunction = new TerminationFunction<int>(generationLimit: 300, rangeSizeToCheckFitnessValue: 30);
+            var terminationFunction = new TerminationFunction<int>(generationLimit: 300);
 
             var geneticAlgorithm = new GeneticAlgorithm<int>(
                 15,

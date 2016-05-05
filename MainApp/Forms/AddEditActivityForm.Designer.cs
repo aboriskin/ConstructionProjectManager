@@ -32,6 +32,8 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.groupBoxBase = new System.Windows.Forms.GroupBox();
+            this.textBoxPreActivities = new System.Windows.Forms.TextBox();
+            this.labelPreActivities = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.labelName = new System.Windows.Forms.Label();
             this.textBoxDuration = new System.Windows.Forms.TextBox();
@@ -53,8 +55,6 @@
             this.labelStartCondition = new System.Windows.Forms.Label();
             this.dateTimePickerStartFrom = new System.Windows.Forms.DateTimePicker();
             this.radioButtonStart = new System.Windows.Forms.RadioButton();
-            this.textBoxPreActivities = new System.Windows.Forms.TextBox();
-            this.labelPreActivities = new System.Windows.Forms.Label();
             this.bottomPanel.SuspendLayout();
             this.groupBoxBase.SuspendLayout();
             this.groupBoxResources.SuspendLayout();
@@ -109,12 +109,30 @@
             this.groupBoxBase.TabStop = false;
             this.groupBoxBase.Text = "Base Information";
             // 
+            // textBoxPreActivities
+            // 
+            this.textBoxPreActivities.Location = new System.Drawing.Point(78, 78);
+            this.textBoxPreActivities.Name = "textBoxPreActivities";
+            this.textBoxPreActivities.Size = new System.Drawing.Size(320, 22);
+            this.textBoxPreActivities.TabIndex = 5;
+            this.textBoxPreActivities.Enter += new System.EventHandler(this.textBoxPreActivities_Enter);
+            this.textBoxPreActivities.Leave += new System.EventHandler(this.textBoxPreActivities_Leave);
+            // 
+            // labelPreActivities
+            // 
+            this.labelPreActivities.AutoSize = true;
+            this.labelPreActivities.Location = new System.Drawing.Point(6, 78);
+            this.labelPreActivities.Name = "labelPreActivities";
+            this.labelPreActivities.Size = new System.Drawing.Size(65, 17);
+            this.labelPreActivities.TabIndex = 6;
+            this.labelPreActivities.Text = "Pre Acts:";
+            // 
             // textBoxName
             // 
             this.textBoxName.Location = new System.Drawing.Point(79, 106);
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(320, 22);
-            this.textBoxName.TabIndex = 5;
+            this.textBoxName.TabIndex = 7;
             // 
             // labelName
             // 
@@ -318,24 +336,6 @@
             this.radioButtonStart.TabStop = true;
             this.radioButtonStart.UseVisualStyleBackColor = true;
             this.radioButtonStart.Click += new System.EventHandler(this.radioButtonTimeConstraint_Click);
-            // 
-            // textBoxPreActivities
-            // 
-            this.textBoxPreActivities.Location = new System.Drawing.Point(78, 78);
-            this.textBoxPreActivities.Name = "textBoxPreActivities";
-            this.textBoxPreActivities.Size = new System.Drawing.Size(320, 22);
-            this.textBoxPreActivities.TabIndex = 7;
-            this.textBoxPreActivities.Enter += new System.EventHandler(this.textBoxPreActivities_Enter);
-            this.textBoxPreActivities.Leave += new System.EventHandler(this.textBoxPreActivities_Leave);
-            // 
-            // labelPreActivities
-            // 
-            this.labelPreActivities.AutoSize = true;
-            this.labelPreActivities.Location = new System.Drawing.Point(6, 78);
-            this.labelPreActivities.Name = "labelPreActivities";
-            this.labelPreActivities.Size = new System.Drawing.Size(65, 17);
-            this.labelPreActivities.TabIndex = 6;
-            this.labelPreActivities.Text = "Pre Acts:";
             // 
             // AddEditActivityForm
             // 

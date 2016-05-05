@@ -27,6 +27,11 @@ namespace DomainModels.Models
             StartDate = null;
         }
 
+        public int GetActivityFinalIndex()
+        {
+            return ActivityDayIndex + Math.Max(Duration - 1, 0);
+        }
+
         #endregion
 
         public bool Validate()

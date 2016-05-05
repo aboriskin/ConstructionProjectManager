@@ -46,6 +46,7 @@
     <Compile Include="GeneticAlgorithm\InitialChromosomeGenerator.cs" />
     <Compile Include="Helpers\DateRange.cs" />
     <Compile Include="Helpers\ResourceConsumptionTimeline.cs" />
+    <Compile Include="Managers\Solver.cs" />
     <Compile Include="Managers\SchedulerManager.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Constraints\TimeConstraint.cs" />

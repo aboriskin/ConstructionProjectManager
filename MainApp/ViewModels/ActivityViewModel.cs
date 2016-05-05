@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DomainModels.Models;
+using DomainModels.Models.Constraints;
 using MainApp.ViewModels.Forms;
 using Newtonsoft.Json;
 
@@ -13,10 +15,10 @@ namespace MainApp.ViewModels
     {
         public ActivityViewModel(StartFormViewModel startForm)
         {
-            _startForm = startForm;
-        }
+            SetStartForm(startForm);
+        }        
 
-        private readonly StartFormViewModel _startForm; 
+        private StartFormViewModel _startForm; 
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -88,6 +90,54 @@ namespace MainApp.ViewModels
         public void DeletePreactivity(int activityId)
         {
             PreActivityIds.Remove(activityId);
+        }
+
+        public void SetStartForm(StartFormViewModel startForm)
+        {
+            _startForm = startForm;
+        }
+
+        public Activity ConvertToDomain()
+        {
+            var result = new Activity()
+            {
+                Id = Id,
+                Name = Name,
+                Duration = Duration,
+                PreActivityIds = PreActivityIds,
+                ResourceConsumptionsPerDay = Resources.Select(r => r.ConvertToDomain()).ToList(),
+                TimeConstraints = new List<TimeConstraint>()
+            };
+
+            if (From != null)
+            {
+                if (IsStartLimited)
+                {
+                    result.TimeConstraints.Add(
+                        new TimeConstraint(TimeConstraintType.Earliest, From.Value.Date));
+                }
+                else
+                {
+                    result.TimeConstraints.Add(
+                        new TimeConstraint(TimeConstraintType.Earliest, From.Value.Date.AddDays(-Duration)));
+                }
+            }
+
+            if (To != null)
+            {
+                if (IsStartLimited)
+                {
+                    result.TimeConstraints.Add(
+                        new TimeConstraint(TimeConstraintType.Latest, To.Value.Date));
+                }
+                else
+                {
+                    result.TimeConstraints.Add(
+                        new TimeConstraint(TimeConstraintType.Latest, To.Value.Date.AddDays(-Duration)));
+                }
+            }
+
+            return result;
         }
     }
 }

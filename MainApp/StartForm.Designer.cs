@@ -62,14 +62,14 @@
             this.saveActivityDialog = new System.Windows.Forms.SaveFileDialog();
             this.openActivityDialog = new System.Windows.Forms.OpenFileDialog();
             this.labelPopulationSize = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxPopulationSize = new System.Windows.Forms.TextBox();
             this.textBoxMaxIterations = new System.Windows.Forms.TextBox();
             this.labelMaxIterations = new System.Windows.Forms.Label();
             this.textBoxMutationProbability = new System.Windows.Forms.TextBox();
             this.labelMutationProbability = new System.Windows.Forms.Label();
             this.textBoxCrossoverProbability = new System.Windows.Forms.TextBox();
             this.labelCrossoverProbability = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonRunAlgorithm = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             this.bottomPanel.SuspendLayout();
@@ -185,14 +185,14 @@
             // 
             // bottomPanel
             // 
-            this.bottomPanel.Controls.Add(this.button1);
+            this.bottomPanel.Controls.Add(this.buttonRunAlgorithm);
             this.bottomPanel.Controls.Add(this.textBoxMutationProbability);
             this.bottomPanel.Controls.Add(this.labelMutationProbability);
             this.bottomPanel.Controls.Add(this.textBoxCrossoverProbability);
             this.bottomPanel.Controls.Add(this.labelCrossoverProbability);
             this.bottomPanel.Controls.Add(this.textBoxMaxIterations);
             this.bottomPanel.Controls.Add(this.labelMaxIterations);
-            this.bottomPanel.Controls.Add(this.textBox1);
+            this.bottomPanel.Controls.Add(this.textBoxPopulationSize);
             this.bottomPanel.Controls.Add(this.labelPopulationSize);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottomPanel.Location = new System.Drawing.Point(0, 302);
@@ -410,12 +410,13 @@
             this.labelPopulationSize.TabIndex = 0;
             this.labelPopulationSize.Text = "Population Size:";
             // 
-            // textBox1
+            // textBoxPopulationSize
             // 
-            this.textBox1.Location = new System.Drawing.Point(130, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(123, 22);
-            this.textBox1.TabIndex = 1;
+            this.textBoxPopulationSize.Location = new System.Drawing.Point(130, 16);
+            this.textBoxPopulationSize.Name = "textBoxPopulationSize";
+            this.textBoxPopulationSize.Size = new System.Drawing.Size(123, 22);
+            this.textBoxPopulationSize.TabIndex = 1;
+            this.textBoxPopulationSize.Text = "15";
             // 
             // textBoxMaxIterations
             // 
@@ -423,6 +424,7 @@
             this.textBoxMaxIterations.Name = "textBoxMaxIterations";
             this.textBoxMaxIterations.Size = new System.Drawing.Size(123, 22);
             this.textBoxMaxIterations.TabIndex = 3;
+            this.textBoxMaxIterations.Text = "100";
             // 
             // labelMaxIterations
             // 
@@ -439,6 +441,7 @@
             this.textBoxMutationProbability.Name = "textBoxMutationProbability";
             this.textBoxMutationProbability.Size = new System.Drawing.Size(123, 22);
             this.textBoxMutationProbability.TabIndex = 7;
+            this.textBoxMutationProbability.Text = "0,01";
             // 
             // labelMutationProbability
             // 
@@ -455,6 +458,7 @@
             this.textBoxCrossoverProbability.Name = "textBoxCrossoverProbability";
             this.textBoxCrossoverProbability.Size = new System.Drawing.Size(123, 22);
             this.textBoxCrossoverProbability.TabIndex = 5;
+            this.textBoxCrossoverProbability.Text = "0,7";
             // 
             // labelCrossoverProbability
             // 
@@ -465,14 +469,15 @@
             this.labelCrossoverProbability.TabIndex = 4;
             this.labelCrossoverProbability.Text = "Crossover Probability:";
             // 
-            // button1
+            // buttonRunAlgorithm
             // 
-            this.button1.Location = new System.Drawing.Point(632, 35);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(109, 30);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Run";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonRunAlgorithm.Location = new System.Drawing.Point(632, 35);
+            this.buttonRunAlgorithm.Name = "buttonRunAlgorithm";
+            this.buttonRunAlgorithm.Size = new System.Drawing.Size(109, 30);
+            this.buttonRunAlgorithm.TabIndex = 3;
+            this.buttonRunAlgorithm.Text = "Run";
+            this.buttonRunAlgorithm.UseVisualStyleBackColor = true;
+            this.buttonRunAlgorithm.Click += new System.EventHandler(this.buttonRunAlgorithm_Click);
             // 
             // StartForm
             // 
@@ -540,14 +545,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ActivityTimeConstraint;
         private System.Windows.Forms.SaveFileDialog saveActivityDialog;
         private System.Windows.Forms.OpenFileDialog openActivityDialog;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonRunAlgorithm;
         private System.Windows.Forms.TextBox textBoxMutationProbability;
         private System.Windows.Forms.Label labelMutationProbability;
         private System.Windows.Forms.TextBox textBoxCrossoverProbability;
         private System.Windows.Forms.Label labelCrossoverProbability;
         private System.Windows.Forms.TextBox textBoxMaxIterations;
         private System.Windows.Forms.Label labelMaxIterations;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxPopulationSize;
         private System.Windows.Forms.Label labelPopulationSize;
     }
 }

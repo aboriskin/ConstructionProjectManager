@@ -8,11 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DomainModels.Managers;
 using MainApp.Forms;
 using MainApp.Helpers;
 using MainApp.ViewModels;
 using MainApp.ViewModels.Forms;
 using Newtonsoft.Json;
+using Utils;
 using Utils.Logging;
 
 namespace MainApp
@@ -210,6 +212,7 @@ namespace MainApp
             {
                 var content = File.ReadAllText(openActivityDialog.FileName);
                 var viewModel = JsonConvert.DeserializeObject<StartFormViewModel>(content);
+                viewModel.SetInternalLinks();
                 InitializeProject(viewModel);
 
                 SetFileName(openActivityDialog.FileName);
@@ -240,6 +243,59 @@ namespace MainApp
         {
             var about = new AboutBoxForm();
             about.ShowDialog();
+        }
+
+        private void buttonRunAlgorithm_Click(object sender, EventArgs e)
+        {
+            string error = ValidateAlgorithmParams();
+            if (String.IsNullOrEmpty(error))
+            {
+                error = _viewModel.Validate();
+            }
+            if (!String.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var domainActivities = _viewModel.GetDomainActivities();
+            var domainResources = _viewModel.GetDomainResources();
+            var solver = new Solver(domainActivities, domainResources);
+
+            var bestResultsKeeper = solver.Run(int.Parse(textBoxPopulationSize.Text),
+                int.Parse(textBoxMaxIterations.Text),
+                double.Parse(textBoxCrossoverProbability.Text),
+                double.Parse(textBoxMutationProbability.Text));
+
+            var duration = solver.CalculateSchedule(bestResultsKeeper.GetBestResults()[0].Chromosome);
+
+            var form = new ScheduleForm((int)duration, domainActivities, domainResources);
+            form.ShowDialog();
+        }
+
+        private string ValidateAlgorithmParams()
+        {
+            if (!FormatHelper.IsInteger(textBoxPopulationSize.Text))
+            {
+                return "Population size must be a number";
+            }
+
+            if (!FormatHelper.IsInteger(textBoxMaxIterations.Text))
+            {
+                return "Max Iterations must be a number";
+            }
+
+            if (!FormatHelper.ValidateProbabity(textBoxCrossoverProbability.Text))
+            {
+                return "Please enter the valid crossover probability";
+            }
+
+            if (!FormatHelper.ValidateProbabity(textBoxMutationProbability.Text))
+            {
+                return "Please enter the valid mutation probability";
+            }
+
+            return null;
         }
     }
 }

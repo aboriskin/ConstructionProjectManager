@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DomainModels.Models;
 
 namespace MainApp.ViewModels
 {
@@ -14,6 +15,15 @@ namespace MainApp.ViewModels
         public ActivityResourceViewModel Clone()
         {
             return new ActivityResourceViewModel
+            {
+                ResourceId = this.ResourceId,
+                Amount = this.Amount
+            };
+        }
+
+        public ResourceConsumptionPerDay ConvertToDomain()
+        {
+            return new ResourceConsumptionPerDay
             {
                 ResourceId = this.ResourceId,
                 Amount = this.Amount
