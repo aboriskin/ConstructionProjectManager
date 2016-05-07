@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DomainModels.Exceptions;
 using DomainModels.Managers;
+using GeneticAlgorithm.Exceptions;
 using GeneticAlgorithm.Managers;
 using MainApp.Forms;
 using MainApp.Helpers;
@@ -35,10 +38,24 @@ namespace MainApp
             this.resourcesDataGridView.AutoGenerateColumns = false;
 
             InitializeProject();
+            InitializeAlgParameters();
+        }
+
+        private void InitializeAlgParameters()
+        {
+            const decimal initialPopulationSize = 30;
+            const decimal initialMaxIterations = 500;
+            const decimal initialCrossoverProbability = (decimal)0.65;
+            const decimal initialMutationProbability = (decimal) 0.01;
+
+            textBoxPopulationSize.Text = initialPopulationSize.ToString();
+            textBoxMaxIterations.Text = initialMaxIterations.ToString();
+            textBoxCrossoverProbability.Text = initialCrossoverProbability.ToString();
+            textBoxMutationProbability.Text = initialMutationProbability.ToString();
         }
 
         private void InitializeProject(StartFormViewModel viewModel = null)
-        {
+        {            
             if (viewModel == null)
             {
                 _viewModel = new StartFormViewModel();
@@ -136,6 +153,7 @@ namespace MainApp
 
         private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SetFileName(null);
             InitializeProject();
         }
 
@@ -263,24 +281,42 @@ namespace MainApp
             var domainResources = _viewModel.GetDomainResources();
             var solver = new Solver(domainActivities, domainResources);
 
-            var worker = new BackgroundWorker();
-            BestChromosomesKeeper<int> bestResultsKeeper = null;
+            var worker = new BackgroundWorker();             
             worker.DoWork += (item, args) =>
             {
-                bestResultsKeeper = solver.Run(int.Parse(textBoxPopulationSize.Text),
+                var bestResultsKeeper = solver.Run(int.Parse(textBoxPopulationSize.Text),
                 int.Parse(textBoxMaxIterations.Text),
                 double.Parse(textBoxCrossoverProbability.Text),
                 double.Parse(textBoxMutationProbability.Text));
+                args.Result = bestResultsKeeper;
             };
 
             worker.RunWorkerCompleted += (item, args) =>
             {
-                pictureBoxLoading.Visible = false;
-                labelStatus.Text = "The solution is found. Preparing the form ...";
-                var duration = solver.CalculateSchedule(bestResultsKeeper.GetBestResults()[0].Chromosome);
-                var form = new ScheduleForm((int)duration, domainActivities, domainResources);
-                form.ShowDialog();
-                labelStatus.Text = @"Enter the data and click ""Run""";
+                if (args.Error != null)
+                {
+                    HandleException(args.Error);
+                    pictureBoxLoading.Visible = false;
+                    labelStatus.Text = @"Enter the data and click ""Run""";
+                    return;
+                }
+                try
+                {
+                    var bestResultsKeeper = args.Result as BestChromosomesKeeper<int>;
+                    pictureBoxLoading.Visible = false;
+                    labelStatus.Text = "The solution is found. Preparing the form ...";
+                    var duration = solver.CalculateSchedule(bestResultsKeeper.GetBestResults()[0].Chromosome);
+                    var form = new ScheduleForm((int) duration, domainActivities, domainResources);
+                    form.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    HandleException(ex);
+                }
+                finally
+                {                    
+                    labelStatus.Text = @"Enter the data and click ""Run""";
+                }
             };
 
             pictureBoxLoading.Visible = true;
@@ -288,11 +324,32 @@ namespace MainApp
             worker.RunWorkerAsync();            
         }
 
+        private void HandleException(Exception ex)
+        {
+            string error = null;
+            if (ex is GeneticAlgorithmException || ex is ConstructionProjectManagerException)
+            {
+                error = ex.Message;
+            }
+            else
+            {
+                error = "Some error happened. Please see the log to figure out the details.";
+            }
+
+            Logger.Log(error, ex);
+            MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         private string ValidateAlgorithmParams()
         {
             if (!FormatHelper.IsInteger(textBoxPopulationSize.Text))
             {
-                return "Population size must be a number";
+                return "Population Size must be a number";
+            }
+
+            if (int.Parse(textBoxPopulationSize.Text) <= 0)
+            {
+                return "Population Size must be a positive number";
             }
 
             if (!FormatHelper.IsInteger(textBoxMaxIterations.Text))
@@ -300,14 +357,19 @@ namespace MainApp
                 return "Max Iterations must be a number";
             }
 
+            if (int.Parse(textBoxMaxIterations.Text) <= 0)
+            {
+                return "Max Iterations must be a positive number";
+            }
+
             if (!FormatHelper.ValidateProbabity(textBoxCrossoverProbability.Text))
             {
-                return "Please enter the valid crossover probability";
+                return "Please enter a valid Crossover Probability";
             }
 
             if (!FormatHelper.ValidateProbabity(textBoxMutationProbability.Text))
             {
-                return "Please enter the valid mutation probability";
+                return "Please enter a valid Mutation Probability";
             }
 
             return null;

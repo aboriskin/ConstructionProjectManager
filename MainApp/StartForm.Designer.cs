@@ -42,6 +42,8 @@
             this.originalArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bottomPanel = new System.Windows.Forms.Panel();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
             this.buttonRunAlgorithm = new System.Windows.Forms.Button();
             this.textBoxMutationProbability = new System.Windows.Forms.TextBox();
             this.labelMutationProbability = new System.Windows.Forms.Label();
@@ -71,11 +73,12 @@
             this.buttonAddResource = new System.Windows.Forms.Button();
             this.saveActivityDialog = new System.Windows.Forms.SaveFileDialog();
             this.openActivityDialog = new System.Windows.Forms.OpenFileDialog();
-            this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
-            this.labelStatus = new System.Windows.Forms.Label();
+            this.panelAlgorithmParamsContainer = new System.Windows.Forms.Panel();
+            this.panelAlgorithmStartControls = new System.Windows.Forms.Panel();
             this.topPanel.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             this.bottomPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.centerSplitContainer)).BeginInit();
             this.centerSplitContainer.Panel1.SuspendLayout();
             this.centerSplitContainer.Panel2.SuspendLayout();
@@ -84,7 +87,7 @@
             this.activityBottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resourcesDataGridView)).BeginInit();
             this.resourceBottomPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
+            this.panelAlgorithmStartControls.SuspendLayout();
             this.SuspendLayout();
             // 
             // topPanel
@@ -189,9 +192,7 @@
             // 
             // bottomPanel
             // 
-            this.bottomPanel.Controls.Add(this.labelStatus);
-            this.bottomPanel.Controls.Add(this.pictureBoxLoading);
-            this.bottomPanel.Controls.Add(this.buttonRunAlgorithm);
+            this.bottomPanel.Controls.Add(this.panelAlgorithmStartControls);
             this.bottomPanel.Controls.Add(this.textBoxMutationProbability);
             this.bottomPanel.Controls.Add(this.labelMutationProbability);
             this.bottomPanel.Controls.Add(this.textBoxCrossoverProbability);
@@ -200,15 +201,40 @@
             this.bottomPanel.Controls.Add(this.labelMaxIterations);
             this.bottomPanel.Controls.Add(this.textBoxPopulationSize);
             this.bottomPanel.Controls.Add(this.labelPopulationSize);
+            this.bottomPanel.Controls.Add(this.panelAlgorithmParamsContainer);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottomPanel.Location = new System.Drawing.Point(0, 375);
             this.bottomPanel.Name = "bottomPanel";
             this.bottomPanel.Size = new System.Drawing.Size(919, 100);
             this.bottomPanel.TabIndex = 1;
             // 
+            // labelStatus
+            // 
+            this.labelStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.labelStatus.Location = new System.Drawing.Point(0, 54);
+            this.labelStatus.Margin = new System.Windows.Forms.Padding(3, 0, 3, 20);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
+            this.labelStatus.Size = new System.Drawing.Size(326, 46);
+            this.labelStatus.TabIndex = 11;
+            this.labelStatus.Text = "Enter the data and click \"Run\"";
+            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pictureBoxLoading
+            // 
+            this.pictureBoxLoading.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBoxLoading.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLoading.Image")));
+            this.pictureBoxLoading.Location = new System.Drawing.Point(222, 19);
+            this.pictureBoxLoading.Name = "pictureBoxLoading";
+            this.pictureBoxLoading.Size = new System.Drawing.Size(24, 24);
+            this.pictureBoxLoading.TabIndex = 10;
+            this.pictureBoxLoading.TabStop = false;
+            this.pictureBoxLoading.Visible = false;
+            // 
             // buttonRunAlgorithm
             // 
-            this.buttonRunAlgorithm.Location = new System.Drawing.Point(702, 15);
+            this.buttonRunAlgorithm.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonRunAlgorithm.Location = new System.Drawing.Point(107, 15);
             this.buttonRunAlgorithm.Name = "buttonRunAlgorithm";
             this.buttonRunAlgorithm.Size = new System.Drawing.Size(109, 30);
             this.buttonRunAlgorithm.TabIndex = 9;
@@ -222,7 +248,6 @@
             this.textBoxMutationProbability.Name = "textBoxMutationProbability";
             this.textBoxMutationProbability.Size = new System.Drawing.Size(123, 22);
             this.textBoxMutationProbability.TabIndex = 7;
-            this.textBoxMutationProbability.Text = "0,01";
             // 
             // labelMutationProbability
             // 
@@ -239,7 +264,6 @@
             this.textBoxCrossoverProbability.Name = "textBoxCrossoverProbability";
             this.textBoxCrossoverProbability.Size = new System.Drawing.Size(123, 22);
             this.textBoxCrossoverProbability.TabIndex = 5;
-            this.textBoxCrossoverProbability.Text = "0,7";
             // 
             // labelCrossoverProbability
             // 
@@ -256,7 +280,6 @@
             this.textBoxMaxIterations.Name = "textBoxMaxIterations";
             this.textBoxMaxIterations.Size = new System.Drawing.Size(123, 22);
             this.textBoxMaxIterations.TabIndex = 3;
-            this.textBoxMaxIterations.Text = "100";
             // 
             // labelMaxIterations
             // 
@@ -273,7 +296,6 @@
             this.textBoxPopulationSize.Name = "textBoxPopulationSize";
             this.textBoxPopulationSize.Size = new System.Drawing.Size(123, 22);
             this.textBoxPopulationSize.TabIndex = 1;
-            this.textBoxPopulationSize.Text = "15";
             // 
             // labelPopulationSize
             // 
@@ -485,24 +507,24 @@
             this.openActivityDialog.Filter = "JSON|*.json|All Files|*.*";
             this.openActivityDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openActivityDialog_FileOk);
             // 
-            // pictureBoxLoading
+            // panelAlgorithmParamsContainer
             // 
-            this.pictureBoxLoading.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLoading.Image")));
-            this.pictureBoxLoading.Location = new System.Drawing.Point(841, 19);
-            this.pictureBoxLoading.Name = "pictureBoxLoading";
-            this.pictureBoxLoading.Size = new System.Drawing.Size(24, 24);
-            this.pictureBoxLoading.TabIndex = 10;
-            this.pictureBoxLoading.TabStop = false;
-            this.pictureBoxLoading.Visible = false;
+            this.panelAlgorithmParamsContainer.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelAlgorithmParamsContainer.Location = new System.Drawing.Point(0, 0);
+            this.panelAlgorithmParamsContainer.Name = "panelAlgorithmParamsContainer";
+            this.panelAlgorithmParamsContainer.Size = new System.Drawing.Size(593, 100);
+            this.panelAlgorithmParamsContainer.TabIndex = 12;
             // 
-            // labelStatus
+            // panelAlgorithmStartControls
             // 
-            this.labelStatus.Location = new System.Drawing.Point(598, 62);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(321, 23);
-            this.labelStatus.TabIndex = 11;
-            this.labelStatus.Text = "Enter the data and click \"Run\"";
-            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.panelAlgorithmStartControls.Controls.Add(this.labelStatus);
+            this.panelAlgorithmStartControls.Controls.Add(this.buttonRunAlgorithm);
+            this.panelAlgorithmStartControls.Controls.Add(this.pictureBoxLoading);
+            this.panelAlgorithmStartControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelAlgorithmStartControls.Location = new System.Drawing.Point(593, 0);
+            this.panelAlgorithmStartControls.Name = "panelAlgorithmStartControls";
+            this.panelAlgorithmStartControls.Size = new System.Drawing.Size(326, 100);
+            this.panelAlgorithmStartControls.TabIndex = 13;
             // 
             // StartForm
             // 
@@ -524,6 +546,7 @@
             this.mainMenuStrip.PerformLayout();
             this.bottomPanel.ResumeLayout(false);
             this.bottomPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).EndInit();
             this.centerSplitContainer.Panel1.ResumeLayout(false);
             this.centerSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.centerSplitContainer)).EndInit();
@@ -532,7 +555,7 @@
             this.activityBottomPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.resourcesDataGridView)).EndInit();
             this.resourceBottomPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).EndInit();
+            this.panelAlgorithmStartControls.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -583,6 +606,8 @@
         private System.Windows.Forms.Label labelPopulationSize;
         private System.Windows.Forms.PictureBox pictureBoxLoading;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Panel panelAlgorithmStartControls;
+        private System.Windows.Forms.Panel panelAlgorithmParamsContainer;
     }
 }
 

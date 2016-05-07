@@ -30,7 +30,7 @@ namespace DomainModels.Helpers
         {
             if (!range.IsLimited())
             {
-                throw new ConstructionProjectManagerException("It should not be possible to consume the resource unlimited amount of time");
+                throw new Exception("It should not be possible to consume the resource unlimited amount of time");
             }
 
             if (amountPerDay == 0)
@@ -44,7 +44,7 @@ namespace DomainModels.Helpers
             {                         
                 if (_timeline[index] < amountPerDay)
                 {
-                    throw new ConstructionProjectManagerException("There is no enough resource for your needs");
+                    throw new Exception("There is no enough resource for your needs");
                 }
 
                 _timeline[index] -= amountPerDay;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithm.Exceptions
 {
-    class GeneticAlgorithmException : Exception
+    public class GeneticAlgorithmException : Exception
     {
         public GeneticAlgorithmException(string message):
             base(message)

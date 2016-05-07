@@ -176,10 +176,15 @@ namespace MainApp.Forms
                 _activity.From = dateTimePickerStartFrom.Checked ? dateTimePickerStartFrom.Value.Date : (DateTime?)null;
                 _activity.To = dateTimePickerStartTo.Checked ? dateTimePickerStartTo.Value.Date : (DateTime?)null;
             }
+            else if (radioButtonFinish.Checked)
+            {
+                _activity.From = dateTimePickerFinishFrom.Checked? dateTimePickerFinishFrom.Value.Date : (DateTime?) null;
+                _activity.To = dateTimePickerFinishTo.Checked ? dateTimePickerFinishTo.Value.Date : (DateTime?) null;
+            }
             else
             {
-                _activity.From = dateTimePickerFinishFrom.Checked ? dateTimePickerFinishFrom.Value.Date : (DateTime?)null;
-                _activity.To = dateTimePickerFinishTo.Checked ? dateTimePickerFinishTo.Value.Date : (DateTime?)null;
+                _activity.From = null;
+                _activity.To = null;
             }
 
             this.DialogResult = DialogResult.OK;
@@ -221,7 +226,7 @@ namespace MainApp.Forms
         {
             if (!FormatHelper.IsInteger(textBoxId.Text))
             {
-                return "Id field must be a numeric";
+                return "Id field must be a integer";
             }
             var activityId = int.Parse(textBoxId.Text);
 
@@ -232,7 +237,7 @@ namespace MainApp.Forms
 
             if (!FormatHelper.IsInteger(textBoxDuration.Text))
             {
-                return "Duration field must be a numeric";
+                return "Duration field must be a integer";
             }
 
             if (int.Parse(textBoxDuration.Text) < 0)

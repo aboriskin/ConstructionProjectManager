@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GeneticAlgorithm.Exceptions;
 using GeneticAlgorithm.Interfaces;
 using GeneticAlgorithm.Managers;
+using Utils.Logging;
 
 namespace GeneticAlgorithm.Core
 {
@@ -41,9 +43,15 @@ namespace GeneticAlgorithm.Core
         {
             var bestChromosomesKeeper = new BestChromosomesKeeper<TGene>(bestResultsCount);
 
+            Logger.Log("Genetic Algorithm started");
+
             var currentPopulation = _initialPopulationGenerator.GeneratePopulation(_populationSize);
+            Logger.Log("Initial population has been generated");
+
             Populations.Add(currentPopulation);
             bestChromosomesKeeper.Process(currentPopulation);
+
+            int iterationNumber = 1;
 
             while (!terminationFunction.ShouldTerminate(currentPopulation, Populations))
             {                
@@ -54,7 +62,12 @@ namespace GeneticAlgorithm.Core
 
                 Populations.Add(currentPopulation);
                 bestChromosomesKeeper.Process(currentPopulation);
+
+                Logger.Log($"Iteration #{iterationNumber} is finished");
+                iterationNumber++;
             }
+            
+            Logger.Log("Genetic Algorithm finished");
 
             return bestChromosomesKeeper;
         }
